@@ -1,0 +1,7 @@
+Makefile
+NOROLLOUT
+.git
+.gitignore
+.DS_Store
+.*.swp
+.*.*.swp
