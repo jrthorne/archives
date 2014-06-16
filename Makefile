@@ -39,7 +39,7 @@ update:
 
 
 rollout:
-	rsync $(RSYNC_OPTIONS) ../archeologist $(ROUSER)@$(ROHOST):$(RODIR)/
+	rsync $(RSYNC_OPTIONS) ../archeologistRoot $(ROUSER)@$(ROHOST):$(RODIR)/
 	@echo "\\033[1;32m"
 	@echo "  =================================================="
 	@echo -n "   Rollout time is "
@@ -48,7 +48,7 @@ rollout:
 	@echo "\\033[0;39m";
 
 clean:	
-	rsync $(RSYNC_OPTIONS) --delete ../archeologist $(ROUSER)@$(ROHOST):$(RODIR)/
+	rsync $(RSYNC_OPTIONS) --delete ../archeologistRoot $(ROUSER)@$(ROHOST):$(RODIR)/
 	@echo "\\033[1;32m"
 	@echo "  =================================================="
 	@echo -n "   Rollout with delete time is "
