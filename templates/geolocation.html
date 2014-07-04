@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)http://www.html5in24hours.com/examples/geolocation-examples.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<title>GeoLocation Examples</title>
+<meta name="viewport" content="width=device-width">
+<script type="text/javascript" async="" src="./geolocation_files/ga.js"></script><script src="./geolocation_files/jquery.min.js"></script>
+<!-- Bing Maps API -->
+<script charset="UTF-8" type="text/javascript" src="./geolocation_files/mapcontrol.ashx">
+</script><script src="./geolocation_files/veapicore.js" type="text/javascript"></script> 
+<link rel="stylesheet" href="http://www.html5in24hours.com/examples/basic-styles.css">
+<style>
+#map {
+	position: absolute;
+	width: 40em;
+	height: 40em;
+}
+.after {
+	position: absolute;
+	left: 40em;
+	background: url(images/famfamfam_silk_icons_v013/icons/house.png) no-repeat left center;
+	padding: 0 0 0 1.6em;
+	margin: 0;
+}
+body { width: 50em; }
+</style>
+</head>
+
+<body>
+<h1>GeoLocation Examples</h1>
+<section>
+<h2>Where Are You Now?</h2>
+<p id="supports">Your browser supports GeoLocation.  There was an problem mapping your location, please try again later.</p>
+<section id="getMapInfo" style="display: none;">
+<h3>Map Options</h3>
+<p>Zoom level:
+Orbit (1)
+<input id="zoomLvl" type="range" min="1" max="20" pattern="[0-9]*">
+(20) Your yard
+</p><p><button id="getGeo">Get My Location</button></p>
+<div id="map"></div>
+</section>
+</section>
+
+<h2>More GeoLocation Examples</h2>
+<ul>
+<li><a href="http://www.html5in24hours.com/examples/geolocation-examples-mapquest.html">Generate a Static Map from MapQuest Open API</a></li>
+</ul>
+<script>
+
+$(document).ready(function(e) {
+	if (supportsGeoLocation()) {
+		$("#supports").html("Your browser supports GeoLocation. ");
+	} else {
+		$("#supports").html("Your browser does not support GeoLocation. ");
+		$("#getMapInfo").hide();
+	}
+	
+	$("#getGeo").click(function(e) {
+		getLocation();
+		return false;
+	});
+});
+
+function supportsGeoLocation() {
+    return !!navigator.geolocation;
+}
+
+function getLocation() {
+	navigator.geolocation.getCurrentPosition(mapIt, locationError);
+}
+function mapIt(position) {
+	var lat = position.coords.latitude;
+	var lon = position.coords.longitude;
+	var zoom = parseInt($("#zoomLvl").val());
+	var map, mapOptions, center, pin, pinOptions;
+
+	// show a map from Bing
+	mapOptions = {
+		credentials: 'AuLrjLtD2yKFDBiYPRPWQwPPjIkz2IT8wUAD3UL3L8Fu4J0QC6pIDD1g46HPhHZN',
+		center: new Microsoft.Maps.Location(lat, lon),
+		zoom: zoom
+	};
+	map = new Microsoft.Maps.Map(document.getElementById('map'), mapOptions);
+	center = map.getCenter();
+	pinOptions = {
+		icon: "images/famfamfam_silk_icons_v013/icons/house.png",
+		width: 16,
+		height: 16,
+		draggable: true	
+	};
+	pin = new Microsoft.Maps.Pushpin(center, pinOptions);
+	map.entities.push(pin);
+
+	// show a map from MapQuest open static map service
+	//var img = '<img src="http://open.mapquestapi.com/staticmap/v3/getmap?size=600,200&zoom=12&center='+lat+','+lon+'">';
+	//$("#map").html(img);
+	$("#map").after('<h3 class="after">You are Here</h3>');
+	
+}
+function locationError(error) {
+	// provide specific error messages if you like.
+	switch(error) {
+		case 1:
+			alert("Location services denied");
+		break;
+		case 2:
+			alert("Could not contact location services network or satellites");
+		break;
+		case 3: 
+			alert("Location services timed out");
+		break;
+		default:
+			alert("Location could not be determined.");
+	}
+	$("#getMapInfo").hide();
+	$("#supports").append(" There was an problem mapping your location, please try again later.");
+}
+
+</script>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-550582-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+</body></html>

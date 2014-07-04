@@ -1,0 +1,115 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Map Trial</title>
+	<meta name="viewport" content="width=device-width"/>
+	<script src="{% static "javascript/jquery-1.8.2.min.js" %}"></script>
+	<script  charset="UTF-8" type="text/javascript"
+	src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0">
+	</script>
+</head>
+
+
+<body>
+<h1>GeoLocation Examples</h1>
+<section>
+<h2>Where are you now</h2>
+<p id="supports">Your browser supports GeoLocation.  There was an problem mapping your location, please try again later.</p>
+
+
+<section id"getMapInfo">
+<h3>Map Options</h3>
+<p>Zoom level:
+Orbit (1)
+<input id="zoomLv1" value="11" type="range" min="1" max="20">
+Your yard (20)
+</p><p><button id="getGeo">Get My Location</button></p>
+<div id="map"></div>
+</section>
+</section>
+
+<script>
+$(document).ready(function(e) {
+	if (supportsGeoLocation()) {
+		$("#supports").html("Your browser supports GeoLocation. ");
+	} else {
+		$("#supports").html("Your browser does not support GeoLocation. ");
+		$("#getMapInfo").hide(); // hide the button and map section
+	}
+	
+	// add a click function to the button to start th4e mapping process 
+	$("#getGeo").click(function(e) {
+		getLocation();
+		return false;
+	});
+
+});
+
+function supportsGeoLocation() {
+	return !!navigator.geolocation;
+};
+
+
+
+// add the get location function 
+function getLocation() {
+	navigator.geolocation.getCurrentPosition(mapIt, locationError);
+}
+
+function mapIt(position) {
+	var lat = position.coords.latitude;
+	var lon = position.coords.longitude;
+	var zoom = parseInt($("#zoomLv1").val());
+	var map, mapOptions, center, pin, pinOptions;
+	
+	// show a map from Bing
+	mapOptions = {
+		credentials: 'AuLrjLtD2yKFDBiYPRPWQwPPjIkz2IT8wUAD3UL3L8Fu4J0QC6pIDD1g46HPhHZN',
+		center: new Microsoft.Maps.Location(lat, lon),
+		zoom: zoom
+	};
+	
+	map = new Microsoft.Maps.Map(document.getElementById('map'), mapOptions);
+	center = map.getCenter();
+	pinOptions = {
+		icon: "{% static "/images/house.jpg" %}",
+		width: 16,
+		height: 16,
+		draggable: true
+	};
+	pin = new Microsoft.Maps.Pushpin(center, pinOptions);
+	map.entities.push(pin);
+	$("#map").after('<h3 class="after">You are Here</h3>');
+}
+
+// add the error callback function locationError to provicde information on what error occurred 
+function locationError(error) {
+	switch(error) {
+		case 1:
+			alert("location services denied");
+		break;
+		case 2:
+			alert("Cound nopt contact location service network or satellites");
+		break;
+		case 3:
+			alert("Location services timed out");
+		break;
+		default:
+			alert("Location could not be determined.");
+	}
+	$("#getMapInfo").hide();
+	$("#supports").append(" There was a problem mapping your location. Please try again later.");
+}
+
+
+
+
+	
+</script>
+
+		
+
+</body>
+</html>
