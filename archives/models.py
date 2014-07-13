@@ -6,6 +6,7 @@ FileName		= 'models.py'
 ##################################################################
 from django.db import models
 from django.contrib.auth.models import User
+#from location_field.models import LocationField
 
 import archeologist.settings
 #####################################################################
@@ -51,6 +52,10 @@ class historical_site(models.Model):
 	country				= models.CharField(max_length=255, blank=True)
 	city				= models.CharField(max_length=255, blank=True)
 	area				= models.FloatField(null=True, blank=True)
+	latitude			= models.FloatField(null=True, blank=True)
+	longitude			= models.FloatField(null=True, blank=True)
+	#point 				= LocationField(based_fields=[street, suburb, postcode],\
+	#					zoom=12, null=True, suffix='Istanbul')
 	
 	def __unicode__(self):
 		return self.name
@@ -73,6 +78,9 @@ class relic(models.Model):
 	archeologist		= models.ForeignKey(archeologist)			
 	latitude			= models.FloatField(null=True, blank=True)
 	longitude			= models.FloatField(null=True, blank=True)
+	
+	photo 				= models.ImageField(upload_to='photo', \
+							blank=True, null=True)
 	
 	# Related relics, the nature of relation could be determined by the through table, eg parent
 	related_to			= models.ManyToManyField("self", null=True, blank=True)
