@@ -1,10 +1,16 @@
-<!DOCTYPE HTML>
-
-<!-- This loads all of the static files --->
 {% load staticfiles %}
-
+<!DOCTYPE HTML>
+<html>
 <head>
-		<title>{% block title %}MagicLAMP Mobile Website Applications{% endblock %}</title>
+	<meta charset="UTF-8">
+	<title>Enter a Relic</title>
+	<meta name="viewport" content="width=device-width"/>
+	<script src="{% static "javascript/jquery-1.8.2.min.js" %}"></script>
+	<script  charset="UTF-8" type="text/javascript"
+	src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0">
+	</script>
+
+		<title>{% block title %}MagicLAMP Archives{% endblock %}</title>
 </head>
 
 <body>

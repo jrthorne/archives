@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if siteList %}
+
+	{% for thisSite in siteList %}
+		<h1><a href="/archives/{{ thisSite.id }}/">{{ thisSite.name }}</a></h1>
+	{% endfor %}
+
+{% else %}
+	<H2>No Historical Sites are available.</H2>
+{% endif %}
+
+
+{% endblock %}

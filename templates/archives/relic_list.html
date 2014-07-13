@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block content %}
+
+<h1>{{ historical_site.name }}</h1>
+
+<ul>
+{% for relic in historical_site.relic_set.all %}
+    <li>{{ relic.name }} found by {{ relic.archeologist }} entered {{ relic.entered }}
+    {% if relic.photo %}
+		 - 	<a href="{{ relic.photo.url }}">Photo</a>
+	{% endif %}</li>
+{% endfor %}
+</ul>
+
+
+<P><a href="/archives/add/{{ historical_site.id }}/"
+class="button button-style2">Add Relic</a></P>
+
+{% endblock %}

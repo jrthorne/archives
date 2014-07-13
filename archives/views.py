@@ -20,7 +20,7 @@ def relicAdd(request, h_siteID):
 	
 	errors					= []
 	if request.method == 'POST':
-		form				= relicForm(request.POST, instance=newRelic)
+		form				= relicForm(request.POST, request.FILES, instance=newRelic)
 		if form.is_valid():		
 			
 			form.save()
