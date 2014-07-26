@@ -9,6 +9,25 @@ from archives.forms import *
 import datetime
 
 # Create your views here.
+#################################################################
+def siteList(request):
+	siteList		= historical_site.objects.all()
+	
+	return render_to_response('archives/index.html', locals())
+# end siteList	
+
+#################################################################
+# all the relics for the given historical site (hsite_id)
+def relicList(request, hsite_id):
+	print hsite_id
+	theSite			= historical_site.objects.get(pk=hsite_id)
+	relicSet		= theSite.relic_set.all()
+
+	return render_to_response('archives/relic_list.html', locals())
+
+# end relicList
+
+##################################################################
 def relicAdd(request, h_siteID):
 	# add the relic now
 	rightNow				= datetime.datetime.now()

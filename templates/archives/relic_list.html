@@ -2,21 +2,103 @@
 
 {% load staticfiles %}
 
+{% block title %}{{ theSite.name }}{% endblock %}
+
+{% block heading %}
+Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
+{% endblock %}
+
+{% block bodyclass %}
+	<body class="right-sidebar">
+{% endblock %}
+
+
 {% block content %}
 
-<h1>{{ historical_site.name }}</h1>
+<!-- Main Wrapper -->
+				<div id="main-wrapper">
+					<div class="5grid-layout">
+						<div class="row">
+							
+							<!-- Content -->
+								<div id="content" class="8u mobileUI-main-content">
 
-<ul>
-{% for relic in historical_site.relic_set.all %}
-    <li>{{ relic.name }} found by {{ relic.archeologist }} entered {{ relic.entered }}
-    {% if relic.photo %}
-		 - 	<a href="{{ relic.photo.url }}">Photo</a>
-	{% endif %}</li>
-{% endfor %}
-</ul>
+									<article class="box">
+<!------------------------------------------------------------------------>
 
 
-<P><a href="/archives/add/{{ historical_site.id }}/"
-class="button button-style2">Add Relic</a></P>
+<h2><a href="/archives/">{{ theSite.name }}</a></h2>
+
+{% if relicSet %}
+	<table class="core table-curved">
+	<tr>
+	<th>Relic Name</th><th>Found By</th><th>Entered</th><th>Photo</th>
+	</tr>
+	
+	{% for relic in relicSet %}
+	<!-- alternate colours with the classes defined in the style sheet -->
+	<tr class={% cycle "odd" "even" %}> 
+		
+		<td>{{ relic.name }}</td><td>{{ relic.archeologist }}</td><td>{{ relic.entered }}</td>
+		<td>
+		{% if relic.photo %}
+			 - 	<a href="{{ relic.photo.url }}">Photo</a>
+		{% endif %}
+		</td>
+		
+	</tr>
+	{% endfor %}
+	</table>
+{% else %}
+	There are no relics recorded for {{ theSite.name }}
+{% endif %}
+
+<!------------------------------------------------------------------------> 
+									</article>
+									
+									<!-- Two Column Content BELOW. NO IDEA WHY, BUT IF THESE SECTIONS
+									DO NOT EXIST THEN THE SIDE BAR APPEARS UNDERNEATH -->
+										<div class="5grid" id="two-column">
+											<div class="row">
+												
+												<!-- Two Column Content -->
+														<div class="6u">
+															
+														</div>
+				
+												<!-- Two Column Content -->
+														<div class="6u">
+															
+														</div>
+											
+											</div>
+										</div>
+									<!-- Two Column Content ABOVE. NO IDEA WHY, BUT IF THESE SECTIONS
+									DO NOT EXIST THEN THE SIDE BAR APPEARS UNDERNEATH -->
+	
+								</div>
+							<!-- Content Ends Here -->
+								
+							<!-- Sidebar -->
+								<div id="sidebar" class="4u">
+									
+									<!-- Sidebar Box1 -->
+										<section class="box">
+										
+										<a href="/archives/add/{{ theSite.id }}/"
+										class="button button-style2">Add Relic</a>
+						
+						
+										</section>
+									
+																
+									
+								</div>
+							<!-- Sidebar Ends Here -->
+	
+						</div>
+					</div>
+				</div>
+
 
 {% endblock %}

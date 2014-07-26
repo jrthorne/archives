@@ -11,15 +11,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'archeologist.views.home', name='home'),
     
 
-	url(r'^$', 
-		ListView.as_view(
-			queryset=historical_site.objects.all(),
-			context_object_name='siteList',
-			template_name='archives/index.html')),
-			
-    url(r'^(?P<pk>\d+)/$',
-    		DetailView.as_view(
-			model=historical_site,
-			template_name='archives/relic_list.html')),
-	 url(r'^add/(\d+)/$', views.relicAdd),
+	url(r'^$', views.siteList),		
+    url(r'^(\d+)/$', views.relicList), 
+	url(r'^add/(\d+)/$', views.relicAdd),
 )

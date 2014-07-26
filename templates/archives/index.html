@@ -1,16 +1,138 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
+{% block title %}{{ historical_site.name }}{% endblock %}
+
+{% block heading %}
+Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
+{% endblock %}
+
+{% block bodyclass %}
+	<body class="right-sidebar">
+{% endblock %}
+
+
 {% block content %}
 
-{% if siteList %}
+<!-- Main Wrapper -->
+				<div id="main-wrapper">
+					<div class="5grid-layout">
+						<div class="row">
+							
+							<!-- Content -->
+								<div id="content" class="8u mobileUI-main-content">
 
+									<article class="box">
+										<!------------------------------------------------------------------------>
+										
+
+{% if siteList %}
+	<table class="core table-curved">
+	<tr>
+	<th>Historical Site</th><th>Zoom <input id="zoomLv1" value="11" type="range" min="1" max="20"></th>
+	</tr>
+	
 	{% for thisSite in siteList %}
-		<h1><a href="/archives/{{ thisSite.id }}/">{{ thisSite.name }}</a></h1>
+		<!-- alternate colours with the classes defined in the style sheet -->
+	<tr class={% cycle "odd" "even" %}> 
+		<td><a href="/archives/{{ thisSite.id }}/">{{ thisSite.name }}</a></td>
+		<td align="center"><button  class="button button-style1" 
+		onclick="mapRecordedPos({{ thisSite.latitude }}, 
+		{{ thisSite.longitude }})">Show Location</button>
+		
+		</td>
+	</tr>
 	{% endfor %}
+	
+	</table>
+	
 
 {% else %}
 	<H2>No Historical Sites are available.</H2>
 {% endif %}
 
 
+<!------------------------------------------------------------------------> 
+									</article>
+									
+									<!-- Two Column Content BELOW. NO IDEA WHY, BUT IF THESE SECTIONS
+									DO NOT EXIST THEN THE SIDE BAR APPEARS UNDERNEATH -->
+										<div class="5grid" id="two-column">
+											<div class="row">
+												
+												<!-- Two Column Content -->
+														<div class="6u">
+															
+														</div>
+				
+												<!-- Two Column Content -->
+														<div class="6u">
+															
+														</div>
+											
+											</div>
+										</div>
+									<!-- Two Column Content ABOVE. NO IDEA WHY, BUT IF THESE SECTIONS
+									DO NOT EXIST THEN THE SIDE BAR APPEARS UNDERNEATH -->
+	
+								</div>
+							<!-- Content Ends Here -->
+								
+							<!-- Sidebar -->
+								<div id="sidebar" class="4u">
+									
+									<!-- Sidebar Box1 -->
+										<section class="box">
+											<h2>Mapping</h2>
+										
+											<div id="map" style="position:relative;width:250px;height:350px;">
+
+											</div>
+											
+												
+
+										</section>
+									
+																
+									
+								</div>
+							<!-- Sidebar Ends Here -->
+	
+						</div>
+					</div>
+				</div>
+
+
+{% endblock %}
+
+
+
+{% block scriptcss %}
+<script>
+
+function mapRecordedPos(lat, lon) {
+	var zoom = parseInt($("#zoomLv1").val());
+	var map, mapOptions, center, pin, pinOptions;
+	
+	// show a map from Bing
+	mapOptions = {
+		credentials: 'AuLrjLtD2yKFDBiYPRPWQwPPjIkz2IT8wUAD3UL3L8Fu4J0QC6pIDD1g46HPhHZN',
+		center: new Microsoft.Maps.Location(lat, lon),
+		zoom: zoom
+	};
+	
+	map = new Microsoft.Maps.Map(document.getElementById('map'), mapOptions);
+	center = map.getCenter();
+	pinOptions = {
+		icon: "{% static "images/house.png" %}",
+		width: 16,
+		height: 16,
+		draggable: true
+	};
+	pin = new Microsoft.Maps.Pushpin(center, pinOptions);
+	map.entities.push(pin);
+}
+
+</script>
 {% endblock %}
