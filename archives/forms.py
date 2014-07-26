@@ -17,7 +17,8 @@ import datetime
 class relicForm(forms.ModelForm):
 	class Meta:
 		model			= relic
-		fields			= ['historical_site', 'archeologist', 'entered', 'name', \
+		fields			= ['historical_site', 'latitude', 'longitude', \
+						'archeologist', 'entered', 'name', \
 						'type', 'related_to','photo', 'description', 'period' ]
 						 
 	# end Meta

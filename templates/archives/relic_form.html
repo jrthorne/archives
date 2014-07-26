@@ -23,16 +23,29 @@
 		<tr>
 			<td bgcolor=#DDDDDD>
 			{% ifequal field.name 'photo' %}
-				{{ field.label }}{{ field.errors }}</td>
+				{{ field.label }}<P style="color: red;">{{ field.errors }}</P></td>
 				<td>{{ field.help_text }}<BR />
 				<input type="file"  name="{{ field.html_name}}" id="{{ field.auto_id }}"
 				capture="camera" accept="image/*" />	
 				</td>
-				
 			{% else %}
-				{{ field.label }}{{ field.errors }}</td>
+				{{ field.label }}<P style="color: red;">{{ field.errors }}</P></td>
 				<td>{{ field.help_text }}<BR />{{ field }}</td>
 			{% endifequal %}
+			{% if field.name == 'longitude' %}
+				<section id="getMapInfo">
+				<h3>Map Options</h3>
+				<p>Zoom level:
+				Macro
+				<input id="zoomLv1" value="11" type="range" min="1" max="20">
+				Micro
+				</p>
+				
+				<p><button onclick="getLocation()">Get My Location</button></p>
+				
+				<div id="map"></div>
+				</section>
+			{% endif %}
 		</tr>
 		{% endfor %}
 	</table>
@@ -41,39 +54,16 @@
 </form>
 
 
-<section id="getMapInfo">
-<h3>Map Options</h3>
-<p>Zoom level:
-Macro
-<input id="zoomLv1" value="11" type="range" min="1" max="20">
-Micro
-</p>
-
-<p><button id="getGeo">Get My Location</button></p>
-
-<div id="map"></div>
-</section>
-
-
 
 <script>
 $(document).ready(function(e) {
 	if (supportsGeoLocation()) {
 		$("#supports").html("Your browser supports GeoLocation. ");
-		var position;
-		position.coords.latitude = {{ theSite.latitude }};
-		position.coords.longitude = {{ theSite.longitude }};
-		mapIt(position)
+		mapRecordedPos();
 	} else {
 		$("#supports").html("Your browser does not support GeoLocation. ");
 		$("#getMapInfo").hide(); // hide the button and map section
 	}
-	
-	// add a click function to the button to start th4e mapping process 
-	$("#getGeo").click(function(e) {
-		getLocation();
-		return false;
-	});
 
 });
 
@@ -85,14 +75,18 @@ function supportsGeoLocation() {
 
 // add the get location function 
 function getLocation() {
-	navigator.geolocation.getCurrentPosition(mapIt, locationError);
+	navigator.geolocation.getCurrentPosition(mapCurrentPos, locationError,{timeout:10000});
 }
 
-function mapIt(position) {
+function mapCurrentPos(position) {
 	var lat = position.coords.latitude;
 	var lon = position.coords.longitude;
 	var zoom = parseInt($("#zoomLv1").val());
 	var map, mapOptions, center, pin, pinOptions;
+	
+	// stuff the new location in to the form
+	document.getElementById('id_latitude').value	= lat;
+	document.getElementById('id_longitude').value	= lon;
 	
 	// show a map from Bing
 	mapOptions = {
@@ -111,7 +105,7 @@ function mapIt(position) {
 	};
 	pin = new Microsoft.Maps.Pushpin(center, pinOptions);
 	map.entities.push(pin);
-	$("#map").after('<h3 class="after">You are Here</h3>');
+	$("#map"); //.after('<h3 class="after">You are Here</h3>');
 }
 
 // add the error callback function locationError to provicde information on what error occurred 
@@ -133,11 +127,32 @@ function locationError(error) {
 	$("#supports").append(" There was a problem mapping your location. Please try again later.");
 }
 
-
-
-
+function mapRecordedPos() {
+	var lat = document.getElementById('id_latitude').value;
+	var lon = document.getElementById('id_longitude').value;
+	var zoom = parseInt($("#zoomLv1").val());
+	var map, mapOptions, center, pin, pinOptions;
 	
-</script>
+	// show a map from Bing
+	mapOptions = {
+		credentials: 'AuLrjLtD2yKFDBiYPRPWQwPPjIkz2IT8wUAD3UL3L8Fu4J0QC6pIDD1g46HPhHZN',
+		center: new Microsoft.Maps.Location(lat, lon),
+		zoom: zoom
+	};
+	
+	map = new Microsoft.Maps.Map(document.getElementById('map'), mapOptions);
+	center = map.getCenter();
+	pinOptions = {
+		icon: "{% static "images/house.png" %}",
+		width: 16,
+		height: 16,
+		draggable: true
+	};
+	pin = new Microsoft.Maps.Pushpin(center, pinOptions);
+	map.entities.push(pin);
+	$("#map").after('<h3 class="after">The Relic is Here</h3>');
+}
 
+</script>
 		
 {% endblock %}

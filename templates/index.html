@@ -9,6 +9,22 @@
 	<script  charset="UTF-8" type="text/javascript"
 	src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0">
 	</script>
+	
+	<style>
+	#map {
+		position: absolute;
+		width: 20em;
+		height: 30em;
+	}
+	.after {
+		position: absolute;
+		left: 40em;
+		background: url({% static "images/house.png" %} no-repeat left center;
+		padding: 0 0 0 1.6em;
+		margin: 0;
+	}
+	body { width: 50em; }
+	</style>
 </head>
 
 
@@ -25,7 +41,7 @@
 Macro
 <input id="zoomLv1" value="11" type="range" min="1" max="20">
 Micro
-</p><p><button id="getGeo">Get My Location</button></p>
+</p><p><button onclick="getLocation()">Get My Location</button></p>
 <div id="map"></div>
 </section>
 
@@ -41,12 +57,6 @@ $(document).ready(function(e) {
 		$("#supports").html("Your browser does not support GeoLocation. ");
 		$("#getMapInfo").hide(); // hide the button and map section
 	}
-	
-	// add a click function to the button to start th4e mapping process 
-	$("#getGeo").click(function(e) {
-		getLocation();
-		return false;
-	});
 
 });
 
@@ -58,7 +68,7 @@ function supportsGeoLocation() {
 
 // add the get location function 
 function getLocation() {
-	navigator.geolocation.getCurrentPosition(mapIt, locationError);
+	navigator.geolocation.getCurrentPosition(mapIt, locationError,{timeout:10000});
 }
 
 function mapIt(position) {
