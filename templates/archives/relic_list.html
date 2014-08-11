@@ -9,7 +9,7 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
 {% endblock %}
 
 {% block bodyclass %}
-	<body class="right-sidebar">
+	<body class="right-sidebar" onload="GetMap()">
 {% endblock %}
 
 
@@ -29,35 +29,11 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
 
 <h2><a href="/archives/">{{ theSite.name }}</a></h2>
 
-{% if relicSet %}
-	<table class="core table-curved">
-	<tr>
-	<th>Relic Name</th><th>Found By</th><th>Entered</th><th>Photo</th>
-	<th>Zoom <input id="zoomLv1" value="11" type="range" min="1" max="20"></th>
-	</tr>
-	
-	{% for relic in relicSet %}
-	<!-- alternate colours with the classes defined in the style sheet -->
-	<tr class={% cycle "odd" "even" %}> 
-		
-		<td>{{ relic.name }}</td><td>{{ relic.archeologist }}</td><td>{{ relic.entered }}</td>
-		<td>
-		{% if relic.photo %}
-			 - 	<a href="{{ relic.photo.url }}">Photo</a>
-		{% endif %}
-		</td>
-		<td align="center"><button  class="button button-style1" 
-		onclick="mapRecordedPos({{ relic.latitude }}, 
-		{{ relic.longitude }})">Show Location</button>
-		
-		</td>
-		
-	</tr>
-	{% endfor %}
-	</table>
-{% else %}
-	There are no relics recorded for {{ theSite.name }}
-{% endif %}
+<h2>Mapping</h2>
+										
+<div id="map" style="position:relative;width:700px;height:500px; border:#555555 2px solid;">
+
+</div>
 
 <!------------------------------------------------------------------------> 
 									</article>
@@ -93,12 +69,32 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
 										
 										<a href="/archives/add/{{ theSite.id }}/"
 										class="button button-style2">Add Relic</a>
+										<BR /><BR />
+										{% if relicSet %}
+											<table class="core table-curved">
+											<tr>
+											<th>Relic Name</th><th>Description</th><th>Photo</th>
+											</tr>
+											
+											{% for relic in relicSet %}
+											<!-- alternate colours with the classes defined in the style sheet -->
+											<tr class={% cycle "odd" "even" %}> 
+												
+												<td>{{ relic.name }}</td><td>{{ relic.description }}</td>
+												<td>
+												{% if relic.photo %}
+													 - 	<a href="{{ relic.photo.url }}">Photo</a>
+												{% endif %}
+												</td>
+												
+												
+											</tr>
+											{% endfor %}
+											</table>
+										{% else %}
+											There are no relics recorded for {{ theSite.name }}
+										{% endif %}
 										
-										<h2>Mapping</h2>
-										
-											<div id="map" style="position:relative;width:250px;height:350px;">
-
-											</div>
 						
 										</section>
 									
@@ -116,30 +112,57 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
 
 
 {% block scriptcss %}
+
 <script>
+    var pinInfoBox;  //the pop up info box
+    var infoboxLayer = new Microsoft.Maps.EntityCollection();
+    var pinLayer = new Microsoft.Maps.EntityCollection();
 
-function mapRecordedPos(lat, lon) {
-	var zoom = parseInt($("#zoomLv1").val());
-	var map, mapOptions, center, pin, pinOptions;
-	
-	// show a map from Bing
-	mapOptions = {
+    function GetMap() {
+    	mapOptions = {
 		credentials: 'AuLrjLtD2yKFDBiYPRPWQwPPjIkz2IT8wUAD3UL3L8Fu4J0QC6pIDD1g46HPhHZN',
-		center: new Microsoft.Maps.Location(lat, lon),
-		zoom: zoom
-	};
-	
-	map = new Microsoft.Maps.Map(document.getElementById('map'), mapOptions);
-	center = map.getCenter();
-	pinOptions = {
-		icon: "{% static "images/house.png" %}",
-		width: 16,
-		height: 16,
-		draggable: true
-	};
-	pin = new Microsoft.Maps.Pushpin(center, pinOptions);
-	map.entities.push(pin);
-}
+		center: new Microsoft.Maps.Location({{ theSite.latitude }}, {{ theSite.longitude }}),
+		zoom: 10
+		};
 
+        map = new Microsoft.Maps.Map(document.getElementById("map"), mapOptions);
+
+        // Create the info box for the pushpin
+        pinInfobox = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(0, 0), { visible: false, height: 160 });
+        infoboxLayer.push(pinInfobox);
+
+		var latLon;
+		var pin;
+        {% for relic in relicSet %}
+            //add pushpins
+            latLon = new Microsoft.Maps.Location({{ relic.latitude }}, {{ relic.longitude }});
+            pin = new Microsoft.Maps.Pushpin(latLon);
+            pin.Title = '{{ relic.name }}';//usually title of the infobox
+            pin.Description = ' \
+            {% if relic.photo %} \
+            	<img src="{{ relic.photo.url }}" \
+            	width=82 height=110 align="left" style="padding-right:10px"> \
+            	<br /> \
+            {% endif %} \
+            {{ relic.description }}<br/> \
+            {{ relic.archeologist }}<br/> \
+            {{ relic.entered }}'; //information you want to display in the infobox
+            pinLayer.push(pin); //add pushpin to pinLayer
+            Microsoft.Maps.Events.addHandler(pin, 'click', displayInfobox);
+        {% endfor %}
+
+        map.entities.push(pinLayer);
+        map.entities.push(infoboxLayer);
+
+    }
+
+    function displayInfobox(e) {
+        pinInfobox.setOptions({title: e.target.Title, description: e.target.Description, visible:true, offset: new Microsoft.Maps.Point(0,25)});
+        pinInfobox.setLocation(e.target.getLocation());
+    }
+
+    function hideInfobox(e) {
+        pinInfobox.setOptions({ visible: false });
+    }
 </script>
 {% endblock %}
