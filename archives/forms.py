@@ -27,8 +27,4 @@ class relicForm(forms.ModelForm):
 						attrs={ 'size' : 25, 'autocomplete': 'off'}),\
 						required=True)
 				
-	"""photo				= forms.FileField( \
-						label='Select a photo', \
-						required=False
-						)"""
 # end relicForm

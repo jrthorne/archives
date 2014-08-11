@@ -2,6 +2,7 @@ from django. shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
+from django.contrib.auth.models import User
 
 from archives.models import *
 from archives.forms import *
@@ -34,8 +35,11 @@ def relicAdd(request, h_siteID):
 	# get rid of the microseconds
 	rightNow				-= datetime.timedelta(microseconds = rightNow.microsecond)
 	theSite				= historical_site.objects.get(pk=h_siteID)
+	u					= User.objects.get(first_name="Manolya")
+	a					= archeologist.objects.get(user=u)
 	newRelic			= relic(entered=rightNow, historical_site=theSite,
-						latitude=theSite.latitude, longitude=theSite.longitude)
+						latitude=theSite.latitude, longitude=theSite.longitude,
+						archeologist=a)
 	
 	errors					= []
 	if request.method == 'POST':

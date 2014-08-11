@@ -75,7 +75,7 @@ class relic_type(models.Model):
 ##############################################################
 class relic(models.Model):
 	# person who entered the data
-	archeologist		= models.ForeignKey(archeologist)			
+	archeologist		= models.ForeignKey(archeologist, null=True, blank=True)			
 	latitude			= models.FloatField(null=True, blank=True)
 	longitude			= models.FloatField(null=True, blank=True)
 	
@@ -86,12 +86,12 @@ class relic(models.Model):
 	related_to			= models.ManyToManyField("self", null=True, blank=True)
 	
 	entered				= models.DateTimeField() # default of now
-	type				= models.ForeignKey(relic_type, null=True)
+	type				= models.ForeignKey(relic_type, null=True, blank=True)
 	
 	name				= models.CharField(max_length=255)
-	historical_site		= models.ForeignKey(historical_site, null=True)
+	historical_site		= models.ForeignKey(historical_site, null=True, blank=True)
 	description			= models.TextField(blank=True)
-	period				= models.ForeignKey(period, null=True)
+	period				= models.ForeignKey(period, null=True, blank=True)
 	
 	def __unicode__(self):
 		return self.name
