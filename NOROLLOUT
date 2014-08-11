@@ -5,3 +5,5 @@ NOROLLOUT
 .DS_Store
 .*.swp
 .*.*.swp
+*.pyc
+archeologistRoot/archeologist/media
