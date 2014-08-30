@@ -1,5 +1,5 @@
 ROUSER := jason
-ROHOST := 119.9.40.12
+ROHOST := fairworksite.com
 RODIR := /www
 
 RSYNC_OPTIONS := --verbose \

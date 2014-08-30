@@ -35,7 +35,7 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
 
 <script type="text/javascript">
 target=document.getElementById('map');
-if (screen.width > 400) {
+if (screen.width > 500) {
 	target.style.width='700px';
 	target.style.height='500px';
 }
@@ -88,7 +88,9 @@ if (screen.width > 400) {
 											<!-- alternate colours with the classes defined in the style sheet -->
 											<tr class={% cycle "odd" "even" %}> 
 												
-												<td>{{ relic.name }}</td><td>{{ relic.description }}</td>
+												<td align="center"><button class="button button-style1"  
+												onClick="setCenter({{ relic.latitude }}, {{ relic.longitude }})">
+												{{ relic.name }}</button></td><td>{{ relic.description }}</td>
 												<td>
 												{% if relic.photo %}
 													<a href="{{ relic.photo.url }}">
@@ -129,6 +131,7 @@ if (screen.width > 400) {
     var pinInfoBox;  //the pop up info box
     var infoboxLayer = new Microsoft.Maps.EntityCollection();
     var pinLayer = new Microsoft.Maps.EntityCollection();
+    var map = null;
 
     function GetMap() {
     	mapOptions = {
@@ -152,9 +155,9 @@ if (screen.width > 400) {
             pin.Title = '{{ relic.name }}';//usually title of the infobox
             pin.Description = ' \
             {% if relic.photo %} \
-            	<img src="{{ relic.photo.url }}" \
-            	width=82 height=110 align="left" style="padding-right:10px"> \
-            	<br /> \
+            {% thumbnail relic.photo "50x50" crop="center" as im %}\
+			<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">\
+			{% endthumbnail %}\<br /> \
             {% endif %} \
             {{ relic.description }}<br/> \
             {{ relic.archeologist }}<br/> \
@@ -166,6 +169,10 @@ if (screen.width > 400) {
         map.entities.push(pinLayer);
         map.entities.push(infoboxLayer);
 
+    }
+    
+     function setCenter(lat, lon) {
+    	map.setView({center: new Microsoft.Maps.Location(lat, lon)});
     }
 
     function displayInfobox(e) {

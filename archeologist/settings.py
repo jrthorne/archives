@@ -122,7 +122,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE			= True
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT 			= os.path.join(PROJECT_ROOT, 'static')
+STATIC_ROOT 			= "" #os.path.join(PROJECT_ROOT, 'static')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -227,4 +227,8 @@ EMAIL_PORT			= '587'
 EMAIL_HOST_USER	= 'jtho2607@gmail.com'
 EMAIL_HOST_PASSWORD = myDecrypt('lw55i68x')
 EMAIL_USE_TLS		= True
+
+ALLOWED_HOSTS = [
+    '.randalwa.com.au', # Allow domain and subdomains
+]
 

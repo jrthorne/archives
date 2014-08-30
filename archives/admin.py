@@ -12,10 +12,15 @@ from django.contrib.auth.models import User
 # r50
 from django import forms
 ##################################################################
+class relicAdmin(admin.ModelAdmin):
+	list_display		= ['id', 'name', 'historical_site', 'photo']
+# end relicAdmin
+
+##################################################################
 
 admin.site.register(archeologist)
 admin.site.register(period)
 admin.site.register(historical_site)
 admin.site.register(relic_type)
-admin.site.register(relic)
+admin.site.register(relic, relicAdmin)
 
