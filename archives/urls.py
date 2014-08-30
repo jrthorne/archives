@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import DetailView, ListView
 from django.conf.urls.static import static
-from django.views.generic.simple import redirect_to, direct_to_template
+from django.views.generic import TemplateView
 
 from archives import views
 from archives.models import *

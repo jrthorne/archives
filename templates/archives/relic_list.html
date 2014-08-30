@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load thumbnail %}
 {% load staticfiles %}
 
 {% block title %}{{ theSite.name }}{% endblock %}
@@ -31,7 +31,15 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
 
 <h2>Mapping</h2>
 										
-<div id="map" style="position:relative;width:700px;height:500px; border:#555555 2px solid;">
+<div id="map" style="position:relative"; border:#555555 2px solid;">
+
+<script type="text/javascript">
+target=document.getElementById('map');
+if (screen.width > 400) {
+	target.style.width='700px';
+	target.style.height='500px';
+}
+</script>
 
 </div>
 
@@ -83,7 +91,11 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
 												<td>{{ relic.name }}</td><td>{{ relic.description }}</td>
 												<td>
 												{% if relic.photo %}
-													 - 	<a href="{{ relic.photo.url }}">Photo</a>
+													<a href="{{ relic.photo.url }}">
+													{% thumbnail relic.photo "50x50" crop="center" as im %}
+														<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+													{% endthumbnail %}
+													 </a>
 												{% endif %}
 												</td>
 												
@@ -164,5 +176,18 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
     function hideInfobox(e) {
         pinInfobox.setOptions({ visible: false });
     }
+    
+
+function resizeheight() {
+    var height = ((62*screen.height)/800);
+    alert(height);
+ 
+	return height;
+}
+function resizewidth() {
+    var width = ((252*screen.width)/1280);
+ 
+	return width;
+}
 </script>
 {% endblock %}

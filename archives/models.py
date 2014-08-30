@@ -6,7 +6,7 @@ FileName		= 'models.py'
 ##################################################################
 from django.db import models
 from django.contrib.auth.models import User
-#from location_field.models import LocationField
+from sorl.thumbnail import ImageField
 
 import archeologist.settings
 #####################################################################
@@ -79,8 +79,7 @@ class relic(models.Model):
 	latitude			= models.FloatField(null=True, blank=True)
 	longitude			= models.FloatField(null=True, blank=True)
 	
-	photo 				= models.ImageField(upload_to='photo', \
-							blank=True, null=True)
+	photo 				= ImageField(upload_to='photo', blank=True, null=True)
 	
 	# Related relics, the nature of relation could be determined by the through table, eg parent
 	related_to			= models.ManyToManyField("self", null=True, blank=True)
@@ -99,4 +98,3 @@ class relic(models.Model):
 	
 # end relic
 
-##############################################################

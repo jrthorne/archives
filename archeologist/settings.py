@@ -20,6 +20,10 @@ else:
 # end if
 
 TEMPLATE_DEBUG = DEBUG
+THUMBNAIL_DEBUG = DEBUG
+# THUMBNAIL_BACKEND = 'sorl.thumbnail.base.ThumbnailBackend'
+# THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.cached_db_kvstore.KVStore'
+
 
 ########################################## 
 def dateFromString(dateString, dateFormat, useTime):
@@ -72,6 +76,8 @@ DATABASES 				= {
 		'PORT': '',					  # Set to empty string for default. Not used with sqlite3.
 	}
 }
+
+
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -177,12 +183,12 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    
+    # thumbnails
+    'sorl.thumbnail',
+    
     'archives',
-    #'geo',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -214,13 +220,6 @@ LOGGING = {
     }
 }
 
-# JRT
-CACHES	= {
-	'default': {
-		'BACKEND' : 'django.core.cache.backends.db.DatabaseCache',
-		'LOCATION' : 'sessioncache',
-	}
-}
 
 #  use gmail for sending emails
 EMAIL_HOST			= 'SMTP.GMAIL.COM'
@@ -228,3 +227,4 @@ EMAIL_PORT			= '587'
 EMAIL_HOST_USER	= 'jtho2607@gmail.com'
 EMAIL_HOST_PASSWORD = myDecrypt('lw55i68x')
 EMAIL_USE_TLS		= True
+
