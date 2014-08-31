@@ -31,15 +31,7 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
 
 <h2>Mapping</h2>
 										
-<div id="map" style="position:relative"; border:#555555 2px solid;">
-
-<script type="text/javascript">
-target=document.getElementById('map');
-if (screen.width > 500) {
-	target.style.width='700px';
-	target.style.height='500px';
-}
-</script>
+<div id="map" style="auto; width: 100%; position:relative"; border:#555555 2px solid;">
 
 </div>
 
@@ -79,17 +71,18 @@ if (screen.width > 500) {
 										class="button button-style2">Add Relic</a>
 										<BR /><BR />
 										{% if relicSet %}
-											<table class="core table-curved">
+											<div style="overflow: auto;height: 500px; width: 100%;">
+											<table class="core table-curved" id='relictable'>
 											<tr>
 											<th>Relic Name</th><th>Description</th><th>Photo</th>
 											</tr>
-											
 											{% for relic in relicSet %}
 											<!-- alternate colours with the classes defined in the style sheet -->
 											<tr class={% cycle "odd" "even" %}> 
 												
 												<td align="center"><button class="button button-style1"  
-												onClick="setCenter({{ relic.latitude }}, {{ relic.longitude }})">
+												onClick="zoomPin({{ relic.latitude }}, {{ relic.longitude }}, 
+																'{{ forloop.counter0 }}')">
 												{{ relic.name }}</button></td><td>{{ relic.description }}</td>
 												<td>
 												{% if relic.photo %}
@@ -100,11 +93,10 @@ if (screen.width > 500) {
 													 </a>
 												{% endif %}
 												</td>
-												
-												
 											</tr>
 											{% endfor %}
 											</table>
+											</div>
 										{% else %}
 											There are no relics recorded for {{ theSite.name }}
 										{% endif %}
@@ -141,7 +133,9 @@ if (screen.width > 500) {
 		};
 
         map = new Microsoft.Maps.Map(document.getElementById("map"), mapOptions);
-
+        map.entities.push(pinLayer);
+        map.entities.push(infoboxLayer);
+    	
         // Create the info box for the pushpin
         pinInfobox = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(0, 0), { visible: false, height: 160 });
         infoboxLayer.push(pinInfobox);
@@ -162,22 +156,26 @@ if (screen.width > 500) {
             {{ relic.description }}<br/> \
             {{ relic.archeologist }}<br/> \
             {{ relic.entered }}'; //information you want to display in the infobox
-            pinLayer.push(pin); //add pushpin to pinLayer
             Microsoft.Maps.Events.addHandler(pin, 'click', displayInfobox);
+            pinLayer.push(pin); //add pushpin to pinLayer
         {% endfor %}
 
-        map.entities.push(pinLayer);
-        map.entities.push(infoboxLayer);
+        
 
     }
     
-     function setCenter(lat, lon) {
+    // zoom to the pin, and popup
+     function zoomPin(lat, lon, pinid) {
     	map.setView({center: new Microsoft.Maps.Location(lat, lon)});
+    	var selectedPin = pinLayer.get(pinid);
+    	Microsoft.Maps.Events.invoke(selectedPin, 'click');
+    	
     }
 
+	// NOTE: The parameter passed is e, but use this for call from sidebar.
     function displayInfobox(e) {
-        pinInfobox.setOptions({title: e.target.Title, description: e.target.Description, visible:true, offset: new Microsoft.Maps.Point(0,25)});
-        pinInfobox.setLocation(e.target.getLocation());
+        pinInfobox.setOptions({title: this.target.Title, description: this.target.Description, visible:true, offset: new Microsoft.Maps.Point(0,25)});
+        pinInfobox.setLocation(this.target.getLocation());
     }
 
     function hideInfobox(e) {
@@ -187,14 +185,12 @@ if (screen.width > 500) {
 
 function resizeheight() {
     var height = ((62*screen.height)/800);
-    alert(height);
- 
 	return height;
 }
 function resizewidth() {
     var width = ((252*screen.width)/1280);
- 
 	return width;
 }
+
 </script>
 {% endblock %}

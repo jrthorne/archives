@@ -11,7 +11,7 @@
 	<script  charset="UTF-8" type="text/javascript"
 	src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0">
 	</script>
-
+	
 	<style>
 	#map {
 		position: absolute;
@@ -30,11 +30,7 @@
 		
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700" rel="stylesheet" />
 		<script src="{% static "javascript/jquery-1.8.2.min.js" %}"></script>
-		{% autoescape off %}  
 		<script src="{% static "stylesheets/wip/5grid/init.js" %}?use=mobile,desktop,1000px&amp;mobileUI=1&amp;mobileUI.theme=none"></script>
-		{% endautoescape %}
-		<script src="{% static "javascript/jquery.dropotron-1.2.js" %}"></script>
-		<script src="{% static "javascript/init.js" %}"></script>
 		<noscript>
 			<link rel="stylesheet" href="{% static "stylesheets/wip/5grid/core.css" %}" />
 			<link rel="stylesheet" href="{% static "stylesheets/wip/5grid/core-desktop.css"  %}"/>
@@ -55,8 +51,6 @@
 		   {% endif %}
 		 });
 		</script>
-		
-		<script type="text/javascript" src="{% static "javascript/datetimepicker.js" %}"></script>
 		
 		{% block headscriptcss %}
 		{% endblock %}
