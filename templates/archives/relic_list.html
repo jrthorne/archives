@@ -31,7 +31,7 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
 
 <h2>Mapping</h2>
 										
-<div id="map" style="auto; width: 100%; position:relative"; border:#555555 2px solid;">
+<div id="map" name="map" style="auto; width: 100%; position:relative"; border:#555555 2px solid;">
 
 </div>
 
@@ -137,7 +137,7 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
         map.entities.push(infoboxLayer);
     	
         // Create the info box for the pushpin
-        pinInfobox = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(0, 0), { visible: false, height: 160 });
+        pinInfobox = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(0, 0), { visible: false, height: 135 });
         infoboxLayer.push(pinInfobox);
 
 		var latLon;
@@ -146,16 +146,11 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
             //add pushpins
             latLon = new Microsoft.Maps.Location({{ relic.latitude }}, {{ relic.longitude }});
             pin = new Microsoft.Maps.Pushpin(latLon);
-            pin.Title = '{{ relic.name }}';//usually title of the infobox
-            pin.Description = ' \
-            {% if relic.photo %} \
-            {% thumbnail relic.photo "50x50" crop="center" as im %}\
-			<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">\
-			{% endthumbnail %}\<br /> \
-            {% endif %} \
-            {{ relic.description }}<br/> \
-            {{ relic.archeologist }}<br/> \
-            {{ relic.entered }}'; //information you want to display in the infobox
+            pin.Title = '{% if relic.photo %} {% thumbnail relic.photo "50x50" crop="center" as im %} \
+    		<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">\
+    		{% endthumbnail %}{% else %}{{ relic.name }}{% endif %}';//usually title of the infobox
+            pin.Description = '{% if relic.description %}{{ relic.description }}{% else %}{{ relic.name }}{% endif %}'; 
+            //information you want to display in the infobox
             Microsoft.Maps.Events.addHandler(pin, 'click', displayInfobox);
             pinLayer.push(pin); //add pushpin to pinLayer
         {% endfor %}
@@ -166,10 +161,11 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
     
     // zoom to the pin, and popup
      function zoomPin(lat, lon, pinid) {
+     	// first move to top of the screen where the map is
+     	scroll(0,0);
     	map.setView({center: new Microsoft.Maps.Location(lat, lon)});
     	var selectedPin = pinLayer.get(pinid);
     	Microsoft.Maps.Events.invoke(selectedPin, 'click');
-    	
     }
 
 	// NOTE: The parameter passed is e, but use this for call from sidebar.
