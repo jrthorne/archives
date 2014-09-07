@@ -45,8 +45,12 @@ Enter a relic in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
 				capture="camera" accept="image/*" />	
 				</td>
 			{% else %}
-				{{ field.label }}<font color="red">{{ field.errors }}</font></td>
-				<td align="center">{{ field.help_text }}<BR />{{ field }}</td>
+				{% if field.is_hidden %}
+				  {{ field }}
+				{% else %}
+				  {{ field.label }}<font color="red">{{ field.errors }}</font></td>
+				  <td align="center">{{ field.help_text }}<BR />{{ field }}</td>
+				{% endif %}
 			{% endifequal %}
 			
 		</tr>
@@ -102,7 +106,8 @@ DO NOT EXIST THEN THE SIDE BAR APPEARS UNDERNEATH -->
 											</p>
 											
 											<p><button class="button button-style1" 
-											onclick="getLocation()">Get My Location</button></p>
+											onclick="getLocation()">Get My Location</button>
+											</p>
 											
 											<div id="map" style="position:relative;width:250px;height:350px;"></div>
 											
@@ -125,11 +130,11 @@ DO NOT EXIST THEN THE SIDE BAR APPEARS UNDERNEATH -->
 <script>
 $(document).ready(function(e) {
 	if (supportsGeoLocation()) {
-		$("#supports").html("Your browser supports GeoLocation. ");
+		$("#supports").html("Get your current position, and drag icon if correction needed");
 		mapRecordedPos();
 	} else {
-		$("#supports").html("Your browser does not support GeoLocation. ");
-		$("#getMapInfo").hide(); // hide the button and map section
+		$("#supports").html("drag icon to correct relic position");
+		//$("#getMapInfo").hide(); // hide the button and map section
 	}
 
 });
@@ -215,9 +220,24 @@ function mapRecordedPos() {
 		height: 16,
 		draggable: true
 	};
+	
 	pin = new Microsoft.Maps.Pushpin(center, pinOptions);
 	map.entities.push(pin);
 	//$("#map").after('<h3 class="after">The Relic is Here</h3>');
+	
+	// Add a handler to the pushpin drag
+    Microsoft.Maps.Events.addHandler(pin, 'mouseup', DisplayLoc);
+	
+}
+
+function DisplayLoc(e){
+	if (e.targetType == 'pushpin'){
+	
+	   var pinLoc = e.target.getLocation();
+	   // stuff the new location in to the form
+	   document.getElementById('id_latitude').value	= pinLoc.latitude;
+	   document.getElementById('id_longitude').value	= pinLoc.longitude;
+	}
 }
 
 </script>

@@ -41,6 +41,7 @@ def relicAdd(request, h_siteID):
 						latitude=theSite.latitude, longitude=theSite.longitude,
 						archeologist=a)
 	
+	
 	errors					= []
 	if request.method == 'POST':
 		form				= relicForm(request.POST, request.FILES, instance=newRelic)
@@ -52,6 +53,9 @@ def relicAdd(request, h_siteID):
 	else:
 		form	= relicForm(instance=newRelic) 
 	# end if
+	
+	form.fields['latitude'].widget 	= forms.HiddenInput()
+	form.fields['longitude'].widget = forms.HiddenInput()
 	
 	return render_to_response('archives/relic_form.html', locals(), \
 			context_instance=RequestContext(request))

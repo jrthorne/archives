@@ -170,7 +170,7 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
 
 	// NOTE: The parameter passed is e, but use this for call from sidebar.
     function displayInfobox(e) {
-        pinInfobox.setOptions({title: this.target.Title, description: this.target.Description, visible:true, offset: new Microsoft.Maps.Point(0,25)});
+        pinInfobox.setOptions({title: this.target.Title, description: this.target.Description, visible:true, offset: new Microsoft.Maps.Point(0,15)});
         pinInfobox.setLocation(this.target.getLocation());
     }
 
