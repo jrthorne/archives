@@ -31,16 +31,16 @@ def relicList(request, hsite_id):
 ##################################################################
 def relicAdd(request, h_siteID):
 	# add the relic now
-	rightNow				= datetime.datetime.now()
+	rightNow			= datetime.datetime.now()
 	# get rid of the microseconds
-	rightNow				-= datetime.timedelta(microseconds = rightNow.microsecond)
+	rightNow			-= datetime.timedelta(microseconds = rightNow.microsecond)
 	theSite				= historical_site.objects.get(pk=h_siteID)
+	relicSet			= theSite.relic_set.all()
 	u					= User.objects.get(first_name="Manolya")
 	a					= archeologist.objects.get(user=u)
 	newRelic			= relic(entered=rightNow, historical_site=theSite,
 						latitude=theSite.latitude, longitude=theSite.longitude,
 						archeologist=a)
-	
 	
 	errors					= []
 	if request.method == 'POST':
@@ -48,7 +48,7 @@ def relicAdd(request, h_siteID):
 		if form.is_valid():		
 			
 			form.save()
-			return HttpResponseRedirect('/archives/')
+			return HttpResponseRedirect('/archives/' + h_siteID + '/')
 		# end if
 	else:
 		form	= relicForm(instance=newRelic) 

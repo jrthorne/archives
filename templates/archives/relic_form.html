@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load thumbnail %}
 {% load staticfiles %}
 
 {% block title %}{{ historical_site.name }}{% endblock %}
@@ -24,42 +24,25 @@ Enter a relic in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
 			
 <!------------------------------------------------------------------------>	
 <section>
-{% if form.errors %}
-	<P style="color: red;">
-	Please correct the error{{form.errors|pluralize }} below.
-	</p>
-{% endif %}
+<h2>Mapping</h2>
+<p id="supports">Your browser supports GeoLocation.  There was an problem mapping your location, please try again later.</p>
+										
+<div id="getMapInfo">
+<h3>Map Options</h3>
+<p>Zoom level:
+Macro
+<input id="zoomLv1" value="11" type="range" min="1" max="20">
+Micro
+</p>
 
+<p><button class="button button-style1" 
+onclick="getLocation()">Get My Location</button>
+</p>
 
-<form id='sampleform' method='post' action='' enctype="multipart/form-data">
-{% csrf_token %}
-	<table  class="core table-form">
-		<tr><th>Field</th><th>Data</th></tr>
-	{% for field in form %}
-		<tr>
-			<td align="center">
-			{% ifequal field.name 'photo' %}
-				{{ field.label }}<P style="color: red;">{{ field.errors }}</P></td>
-				<td align="center">{{ field.help_text }}<BR />
-				<input type="file"  name="{{ field.html_name}}" id="{{ field.auto_id }}"
-				capture="camera" accept="image/*" />	
-				</td>
-			{% else %}
-				{% if field.is_hidden %}
-				  {{ field }}
-				{% else %}
-				  {{ field.label }}<font color="red">{{ field.errors }}</font></td>
-				  <td align="center">{{ field.help_text }}<BR />{{ field }}</td>
-				{% endif %}
-			{% endifequal %}
-			
-		</tr>
-		{% endfor %}
-	</table>
-	<input class="button button-style1" type='submit' value='Submit' />
-</form>
+<div id="map" name="map" style="auto; width: 100%; position:relative"; border:#555555 2px solid;">
+</div>
 
-
+</div>	
 
 <!------------------------------------------------------------------------>	
 
@@ -94,24 +77,45 @@ DO NOT EXIST THEN THE SIDE BAR APPEARS UNDERNEATH -->
 									
 									<!-- Sidebar Box1 -->
 										<section class="box">
-										<h2>Mapping</h2>
-<p id="supports">Your browser supports GeoLocation.  There was an problem mapping your location, please try again later.</p>
+{% if form.errors %}
+	<P style="color: red;">
+	Please correct the error{{form.errors|pluralize }} below.
+	</p>
+{% endif %}
+
+
+<form id='sampleform' method='post' action='' enctype="multipart/form-data">
+{% csrf_token %}
+	<table  class="core table-form">
+		<tr><th>Data</th></tr>
+	{% for field in form %}
+		<tr>
+			<td align="center">
+			{% ifequal field.name 'photo' %}
+				{{ field.label }}<font color="red">{{ field.errors }}</font></td></tr><tr>
+				<td align="center">
+				<input type="file"  name="{{ field.html_name}}" id="{{ field.auto_id }}"
+				capture="camera" accept="image/*" /><BR />{{ field.help_text }}	
+				</td>
+			{% else %}
+				{% if field.is_hidden %}
+				  {{ field }}
+				{% else %}
+				  {{ field.label }}<font color="red">{{ field.errors }}</font></td></tr><tr>
+				  <td align="center">{{ field }}<BR />{{ field.help_text }}</td>
+				{% endif %}
+			{% endifequal %}
+			
+		</tr>
+		{% endfor %}
+	</table>
+	<input class="button button-style1" type='submit' value='Submit' />
+</form>
+
+
 										
-											<div id="getMapInfo">
-											<h3>Map Options</h3>
-											<p>Zoom level:
-											Macro
-											<input id="zoomLv1" value="11" type="range" min="1" max="20">
-											Micro
-											</p>
-											
-											<p><button class="button button-style1" 
-											onclick="getLocation()">Get My Location</button>
-											</p>
-											
-											<div id="map" style="position:relative;width:250px;height:350px;"></div>
-											
-											</div>								
+										
+																	
 										
 										</section>
 									
@@ -214,6 +218,7 @@ function mapRecordedPos() {
 	
 	map = new Microsoft.Maps.Map(document.getElementById('map'), mapOptions);
 	center = map.getCenter();
+	
 	pinOptions = {
 		icon: "{% static "images/house.png" %}",
 		width: 16,
@@ -226,11 +231,50 @@ function mapRecordedPos() {
 	//$("#map").after('<h3 class="after">The Relic is Here</h3>');
 	
 	// Add a handler to the pushpin drag
-    Microsoft.Maps.Events.addHandler(pin, 'mouseup', DisplayLoc);
+    Microsoft.Maps.Events.addHandler(pin, 'mouseup', recordPinLocation);
+	
+	//------------------------
+		var pinInfoBox;  //the pop up info box
+		var infoboxLayer = new Microsoft.Maps.EntityCollection();
+		var pinLayer = new Microsoft.Maps.EntityCollection();
+		map.entities.push(pinLayer);
+        map.entities.push(infoboxLayer);
+    	
+        // Create the info box for the pushpin
+        pinInfobox = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(0, 0), { visible: false, height: 135 });
+        infoboxLayer.push(pinInfobox);
+
+		var latLon;
+		var oldrelic;
+        {% for relic in relicSet %}
+            //add recorded relic positions if not at same position as this one
+            if (lat != {{ relic.latitude }} && lon != {{ relic.longitude }}) {
+				latLon = new Microsoft.Maps.Location({{ relic.latitude }}, {{ relic.longitude }});
+				oldrelic = new Microsoft.Maps.Pushpin(latLon);
+				oldrelic.Title = '{% if relic.photo %} {% thumbnail relic.photo "50x50" crop="center" as im %} \
+				<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">\
+				{% endthumbnail %}{% else %}{{ relic.name }}{% endif %}';//usually title of the infobox
+				oldrelic.Description = '{% if relic.description %}{{ relic.description }}{% else %}{{ relic.name }}{% endif %}'; 
+				//information you want to display in the infobox
+				Microsoft.Maps.Events.addHandler(oldrelic, 'click', displayInfobox);
+				pinLayer.push(oldrelic); //add pushpin to pinLayer
+			}
+        {% endfor %}
+	//------------------
+
 	
 }
 
-function DisplayLoc(e){
+function displayInfobox(e) {
+	pinInfobox.setOptions({title: this.target.Title, description: this.target.Description, visible:true, offset: new Microsoft.Maps.Point(0,15)});
+	pinInfobox.setLocation(this.target.getLocation());
+}
+
+function hideInfobox(e) {
+	pinInfobox.setOptions({ visible: false });
+}
+
+function recordPinLocation(e){
 	if (e.targetType == 'pushpin'){
 	
 	   var pinLoc = e.target.getLocation();

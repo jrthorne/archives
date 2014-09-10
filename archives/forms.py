@@ -18,7 +18,10 @@ class relicForm(forms.ModelForm):
 	class Meta:
 		model			= relic
 		fields			= ['historical_site', 'latitude', 'longitude', 'name', \
-						'photo', 'description']						 
+						'photo', 'media_file', 'media_link', 'description']						 
 	# end Meta
+	
+	description = forms.CharField(widget=forms.Textarea(\
+		attrs={'rows':'10', 'cols':'30'}), max_length=250, required=False)
 				
 # end relicForm

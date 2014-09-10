@@ -80,6 +80,11 @@ class relic(models.Model):
 	longitude			= models.FloatField(null=True, blank=True)
 	
 	photo 				= ImageField(upload_to='photo', blank=True, null=True)
+	media_file			= models.FileField(upload_to='%Y%m%d', \
+						null=True, blank=True)
+	media_link			= models.CharField(max_length=80, blank=True, null=True,\
+						help_text="URL to media")
+	
 	
 	# Related relics, the nature of relation could be determined by the through table, eg parent
 	related_to			= models.ManyToManyField("self", null=True, blank=True)
@@ -89,7 +94,7 @@ class relic(models.Model):
 	
 	name				= models.CharField(max_length=255)
 	historical_site		= models.ForeignKey(historical_site, null=True, blank=True)
-	description			= models.TextField(blank=True)
+	description			= models.TextField(blank=True, null=True)
 	period				= models.ForeignKey(period, null=True, blank=True)
 	
 	def __unicode__(self):

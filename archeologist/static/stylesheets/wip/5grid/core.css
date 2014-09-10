@@ -69,6 +69,8 @@ td.jmiddle { text-align:left; width:50%; }
     border-collapse:separate;
     border: 0;
     border-radius: 5px;
+    border-collapse: separate; 
+    border-spacing: 10px;
 }
 
 .table-form th{

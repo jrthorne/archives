@@ -74,7 +74,7 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
 											<div style="overflow: auto;height: 500px; width: 100%;">
 											<table class="core table-curved" id='relictable'>
 											<tr>
-											<th>Relic Name</th><th>Description</th><th>Photo</th>
+											<th>Relic Name</th><th>Description</th><th>Media</th>
 											</tr>
 											{% for relic in relicSet %}
 											<!-- alternate colours with the classes defined in the style sheet -->
@@ -92,6 +92,12 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
 													{% endthumbnail %}
 													 </a>
 												{% endif %}
+												{% if relic.media_file %}
+												  <a href="{{ relic.media_file.url }}">Download</a><BR />
+												{% endif %} 
+            									{% if relic.media_link %}
+            									  <a href="{{ relic.media_link }}">Link</a>
+            									{% endif %} 
 												</td>
 											</tr>
 											{% endfor %}
@@ -149,7 +155,9 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
             pin.Title = '{% if relic.photo %} {% thumbnail relic.photo "50x50" crop="center" as im %} \
     		<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">\
     		{% endthumbnail %}{% else %}{{ relic.name }}{% endif %}';//usually title of the infobox
-            pin.Description = '{% if relic.description %}{{ relic.description }}{% else %}{{ relic.name }}{% endif %}'; 
+            pin.Description = '{% if relic.media_file %}<a href="{{ relic.media_file.url }}">Download</a><BR />{% endif %} \
+            {% if relic.media_link %}<a href="{{ relic.media_link }}">Link</a><BR />{% endif %} \
+            {% if relic.description %}{{ relic.description }}{% else %}{{ relic.name }}{% endif %}'; 
             //information you want to display in the infobox
             Microsoft.Maps.Events.addHandler(pin, 'click', displayInfobox);
             pinLayer.push(pin); //add pushpin to pinLayer
