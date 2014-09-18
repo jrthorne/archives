@@ -83,7 +83,15 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
 												<td align="center"><button class="button button-style1"  
 												onClick="zoomPin({{ relic.latitude }}, {{ relic.longitude }}, 
 																'{{ forloop.counter0 }}')">
-												{{ relic.name }}</button></td><td>{{ relic.description }}</td>
+												{{ relic.name }}</button></td>
+												<td><a href='{% url 'relicMod' relic.id %}'>
+												{% if relic.description %}
+													{{ relic.description }}
+												{% else %}
+													Modify Relic
+												{% endif %}
+												</a>
+												</td>
 												<td>
 												{% if relic.photo %}
 													<a href="{{ relic.photo.url }}">

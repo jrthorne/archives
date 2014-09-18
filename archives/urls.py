@@ -11,8 +11,8 @@ urlpatterns = patterns('',
     # url(r'^$', 'archeologist.views.home', name='home'),
     
 
-	url(r'^$', views.siteList),		
-    url(r'^(\d+)/$', views.relicList), 
-	url(r'^add/(\d+)/$', views.relicAdd),
-	url(r'^mod/(\d+)/$', views.relicMod),
+	url(r'^$', views.siteList, name='siteList'),		
+    url(r'^(\d+)/$', views.relicList, name='relicList'), 
+	url(r'^add/(\d+)/$', views.relicAdd, name='relicAdd'),
+	url(r'^mod/(\d+)/$', views.relicMod, name='relicMod'),
 )

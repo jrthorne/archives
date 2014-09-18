@@ -219,19 +219,7 @@ function mapRecordedPos() {
 	map = new Microsoft.Maps.Map(document.getElementById('map'), mapOptions);
 	center = map.getCenter();
 	
-	pinOptions = {
-		icon: "{% static "images/house.png" %}",
-		width: 16,
-		height: 16,
-		draggable: true
-	};
 	
-	pin = new Microsoft.Maps.Pushpin(center, pinOptions);
-	map.entities.push(pin);
-	//$("#map").after('<h3 class="after">The Relic is Here</h3>');
-	
-	// Add a handler to the pushpin drag
-    Microsoft.Maps.Events.addHandler(pin, 'mouseup', recordPinLocation);
 	
 	//------------------------
 		var pinInfoBox;  //the pop up info box
@@ -261,7 +249,20 @@ function mapRecordedPos() {
 			}
         {% endfor %}
 	//------------------
-
+	
+    pinOptions = {
+		icon: "{% static "images/house.png" %}",
+		width: 16,
+		height: 16,
+		draggable: true
+	};
+	
+	pin = new Microsoft.Maps.Pushpin(center, pinOptions);
+	map.entities.push(pin);
+	//$("#map").after('<h3 class="after">The Relic is Here</h3>');
+	
+	// Add a handler to the pushpin drag
+    Microsoft.Maps.Events.addHandler(pin, 'mouseup', recordPinLocation);
 	
 }
 

@@ -50,7 +50,6 @@ def relicAdd(request, h_siteID):
 	if request.method == 'POST':
 		form				= relicForm(request.POST, request.FILES, instance=newRelic)
 		if form.is_valid():		
-			
 			form.save()
 			return HttpResponseRedirect('/archives/' + h_siteID + '/')
 		# end if
@@ -68,18 +67,21 @@ def relicAdd(request, h_siteID):
 
 ##################################################################
 def relicMod(request, relicID):
-	theRelic			= relic.objects.get(pk=relicID)
+	theRelic			= get_object_or_404(relic, pk=relicID)
+	theSite				= theRelic.historical_site
+	h_siteID			= str(theSite.id)
+	relicSet			= theSite.relic_set.all()
+	
 	
 	errors					= []
 	if request.method == 'POST':
 		form				= relicForm(request.POST, request.FILES, instance=theRelic)
-		if form.is_valid():		
-			
+		if form.is_valid():			
 			form.save()
 			return HttpResponseRedirect('/archives/' + h_siteID + '/')
 		# end if
 	else:
-		form	= relicForm(instance=newRelic) 
+		form	= relicForm(instance=theRelic) 
 	# end if
 	
 	form.fields['latitude'].widget 	= forms.HiddenInput()
