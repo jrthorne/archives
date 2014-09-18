@@ -14,6 +14,7 @@ from django import forms
 ##################################################################
 class relicAdmin(admin.ModelAdmin):
 	list_display		= ['id', 'name', 'historical_site', 'photo']
+	list_filter			= ['historical_site']
 # end relicAdmin
 
 ##################################################################

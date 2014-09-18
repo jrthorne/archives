@@ -14,4 +14,5 @@ urlpatterns = patterns('',
 	url(r'^$', views.siteList),		
     url(r'^(\d+)/$', views.relicList), 
 	url(r'^add/(\d+)/$', views.relicAdd),
+	url(r'^mod/(\d+)/$', views.relicMod),
 )

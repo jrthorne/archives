@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.contrib.auth.models import User
+import string # for use in filtering non printing characers
 
 from archives.models import *
 from archives.forms import *
@@ -23,6 +24,9 @@ def relicList(request, hsite_id):
 	print hsite_id
 	theSite			= historical_site.objects.get(pk=hsite_id)
 	relicSet		= theSite.relic_set.all()
+	for r in relicSet:
+		r.name		= filter(lambda x: x in string.printable, r.name)
+		r.description		= filter(lambda x: x in string.printable, r.description)
 
 	return render_to_response('archives/relic_list.html', locals())
 
@@ -60,4 +64,28 @@ def relicAdd(request, h_siteID):
 	return render_to_response('archives/relic_form.html', locals(), \
 			context_instance=RequestContext(request))
 			
-# end add_relic
+# end relicAdd
+
+##################################################################
+def relicMod(request, relicID):
+	theRelic			= relic.objects.get(pk=relicID)
+	
+	errors					= []
+	if request.method == 'POST':
+		form				= relicForm(request.POST, request.FILES, instance=theRelic)
+		if form.is_valid():		
+			
+			form.save()
+			return HttpResponseRedirect('/archives/' + h_siteID + '/')
+		# end if
+	else:
+		form	= relicForm(instance=newRelic) 
+	# end if
+	
+	form.fields['latitude'].widget 	= forms.HiddenInput()
+	form.fields['longitude'].widget = forms.HiddenInput()
+	
+	return render_to_response('archives/relic_form.html', locals(), \
+			context_instance=RequestContext(request))
+			
+# end relicMod
