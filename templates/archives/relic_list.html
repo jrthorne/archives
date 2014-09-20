@@ -86,7 +86,7 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
 												{{ relic.name }}</button></td>
 												<td><a href='{% url 'relicMod' relic.id %}'>
 												{% if relic.description %}
-													{{ relic.description }}
+													{{ relic.description|linebreaksbr  }}
 												{% else %}
 													Modify Relic
 												{% endif %}
@@ -165,7 +165,7 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
     		{% endthumbnail %}{% else %}{{ relic.name }}{% endif %}';//usually title of the infobox
             pin.Description = '{% if relic.media_file %}<a href="{{ relic.media_file.url }}">Download</a><BR />{% endif %} \
             {% if relic.media_link %}<a href="{{ relic.media_link }}">Link</a><BR />{% endif %} \
-            {% if relic.description %}{{ relic.description }}{% else %}{{ relic.name }}{% endif %}'; 
+            {% if relic.description %}{{ relic.description|linebreaksbr  }}{% else %}{{ relic.name|linebreaksbr  }}{% endif %}'; 
             //information you want to display in the infobox
             Microsoft.Maps.Events.addHandler(pin, 'click', displayInfobox);
             pinLayer.push(pin); //add pushpin to pinLayer

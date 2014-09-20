@@ -6,4 +6,7 @@ NOROLLOUT
 .*.swp
 .*.*.swp
 *.pyc
+*.tar
+*.sql
+*.gz
 archeologistRoot/archeologist/media/

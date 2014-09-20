@@ -242,7 +242,7 @@ function mapRecordedPos() {
 				oldrelic.Title = '{% if relic.photo %} {% thumbnail relic.photo "50x50" crop="center" as im %} \
 				<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">\
 				{% endthumbnail %}{% else %}{{ relic.name }}{% endif %}';//usually title of the infobox
-				oldrelic.Description = '{% if relic.description %}{{ relic.description }}{% else %}{{ relic.name }}{% endif %}'; 
+				oldrelic.Description = '{% if relic.description %}{{ relic.description|linebreaksbr }}{% else %}{{ relic.name }}{% endif %}'; 
 				//information you want to display in the infobox
 				Microsoft.Maps.Events.addHandler(oldrelic, 'click', displayInfobox);
 				pinLayer.push(oldrelic); //add pushpin to pinLayer
