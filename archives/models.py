@@ -82,7 +82,7 @@ class relic(models.Model):
 	photo 				= ImageField(upload_to='photo', blank=True, null=True)
 	media_file			= models.FileField(upload_to='%Y%m%d', \
 						null=True, blank=True)
-	media_link			= models.CharField(max_length=80, blank=True, null=True,\
+	media_link			= models.CharField(max_length=255, blank=True, null=True,\
 						help_text="URL to media")
 	
 	
