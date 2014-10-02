@@ -141,7 +141,7 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
 
     function GetMap() {
     	mapOptions = {
-		credentials: 'AuLrjLtD2yKFDBiYPRPWQwPPjIkz2IT8wUAD3UL3L8Fu4J0QC6pIDD1g46HPhHZN',
+		credentials: '{{ BING_KEY }}',
 		center: new Microsoft.Maps.Location({{ theSite.latitude }}, {{ theSite.longitude }}),
 		zoom: 10
 		};

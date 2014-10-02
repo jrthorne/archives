@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.contrib.auth.models import User
 import string # for use in filtering non printing characers
+from django.conf import settings
 
 from archives.models import *
 from archives.forms import *
@@ -13,6 +14,8 @@ import datetime
 # Create your views here.
 #################################################################
 def siteList(request):
+	# used in context
+	BING_KEY		= settings.BING_KEY
 	siteList		= historical_site.objects.all()
 	
 	return render_to_response('archives/index.html', locals())
@@ -21,7 +24,8 @@ def siteList(request):
 #################################################################
 # all the relics for the given historical site (hsite_id)
 def relicList(request, hsite_id):
-	print hsite_id
+	# used in context
+	BING_KEY		= settings.BING_KEY
 	theSite			= historical_site.objects.get(pk=hsite_id)
 	relicSet		= theSite.relic_set.all()
 	for r in relicSet:
@@ -34,6 +38,8 @@ def relicList(request, hsite_id):
 
 ##################################################################
 def relicAdd(request, h_siteID):
+	# used in context
+	BING_KEY		= settings.BING_KEY
 	# add the relic now
 	rightNow			= datetime.datetime.now()
 	# get rid of the microseconds
@@ -67,6 +73,8 @@ def relicAdd(request, h_siteID):
 
 ##################################################################
 def relicMod(request, relicID):
+	# used in context
+	BING_KEY		= settings.BING_KEY
 	theRelic			= get_object_or_404(relic, pk=relicID)
 	theSite				= theRelic.historical_site
 	h_siteID			= str(theSite.id)

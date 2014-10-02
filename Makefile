@@ -1,5 +1,5 @@
 ROUSER := jason
-ROHOST := fairworksite.com
+ROHOST := cybergameacademy.com
 RODIR := /www
 
 RSYNC_OPTIONS := --verbose \
@@ -56,3 +56,11 @@ clean:
 	@echo "  =================================================="
 	@echo "\\033[0;39m";
 
+pull:
+	rsync $(RSYNC_OPTIONS) $(ROUSER)@$(ROHOST):$(RODIR)/archeologistRoot ../
+	@echo "\\033[1;32m"
+	@echo "  =================================================="
+	@echo -n "   Pull time is "
+	@date
+	@echo "  =================================================="
+	@echo "\\033[0;39m";
