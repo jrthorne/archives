@@ -81,12 +81,11 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
 											<tr class={% cycle "odd" "even" %}> 
 												
 												<td align="center"><button class="button button-style1"  
-												onClick="zoomPin({{ relic.latitude }}, {{ relic.longitude }}, 
-																'{{ forloop.counter0 }}')">
-												{{ relic.name }}</button></td>
+												onClick="zoomPin({{ relic.latitude }}, {{ relic.longitude }},'{{ forloop.counter0 }}')">{{ relic.name }}</button>
+												</td>
 												<td><a href='{% url 'relicMod' relic.id %}'>
 												{% if relic.description %}
-													{{ relic.description|linebreaksbr  }}
+													{{ relic.description|truncatechars:100|linebreaksbr  }}
 												{% else %}
 													Modify Relic
 												{% endif %}
@@ -160,12 +159,13 @@ Archived Relics in <a href="/archives/{{ theSite.id }}/">{{ theSite.name }}</a>
             //add pushpins
             latLon = new Microsoft.Maps.Location({{ relic.latitude }}, {{ relic.longitude }});
             pin = new Microsoft.Maps.Pushpin(latLon);
-            pin.Title = '{% if relic.photo %} {% thumbnail relic.photo "50x50" crop="center" as im %} \
+            /*pin.Title = '{{ relic.name|linebreaksbr  }}';*/ //usually title of the infobox
+    		
+            pin.Description = '{% if relic.description %}{{ relic.description|truncatechars:100|linebreaksbr  }}{% else %}{{ relic.name|linebreaksbr  }}{% endif %}<BR />\
+            {% if relic.photo %} {% thumbnail relic.photo "50x50" crop="center" as im %} \
     		<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">\
-    		{% endthumbnail %}{% else %}{{ relic.name }}{% endif %}';//usually title of the infobox
-            pin.Description = '{% if relic.media_file %}<a href="{{ relic.media_file.url }}">Download</a><BR />{% endif %} \
-            {% if relic.media_link %}<a href="{{ relic.media_link }}">Link</a><BR />{% endif %} \
-            {% if relic.description %}{{ relic.description|linebreaksbr  }}{% else %}{{ relic.name|linebreaksbr  }}{% endif %}'; 
+    		{% endthumbnail %}{% endif %}'; 
+    		
             //information you want to display in the infobox
             Microsoft.Maps.Events.addHandler(pin, 'click', displayInfobox);
             pinLayer.push(pin); //add pushpin to pinLayer

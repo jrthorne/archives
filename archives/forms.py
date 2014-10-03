@@ -22,6 +22,6 @@ class relicForm(forms.ModelForm):
 	# end Meta
 	
 	description = forms.CharField(widget=forms.Textarea(\
-		attrs={'rows':'10', 'cols':'30'}), max_length=250, required=False)
+		attrs={'rows':'10', 'cols':'30'}), required=False)
 				
 # end relicForm
