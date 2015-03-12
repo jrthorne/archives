@@ -17,22 +17,16 @@
 		color: #7f7f7f;
 	}
 
-
-
-/* JRT I don't know what this does other than stop
-			checkboxes from working in forms
 	form
 	{
 	}
-		
+	
 		form input,
 		form select,
-		
 		form textarea
 		{
-			 -webkit-appearance: none;
+			-webkit-appearance: none;
 		}
-/************ JRT *********************/
 			
 	br.clear
 	{
@@ -51,8 +45,7 @@
 	
 	a
 	{
-		color: #0000ff
-		/* color: #e87900;  JRT */
+		color: #e84700;
 	}
 	
 		a:hover
@@ -119,7 +112,7 @@
 		ul.style1 a
 		{
 			text-decoration: underline;
-			color: #e87900;
+			color: #e84700;
 		}
 
 			ul.style1 a:hover
@@ -196,7 +189,7 @@
 		margin-top: 1em;
 		padding: 0.70em 1.5em;
 		border-radius: 5px;
-		background: #e87900;
+		background: #e84700;
 		line-height: 1;
 		text-align: center;
 		text-decoration: none;
@@ -208,7 +201,7 @@
 	
 		.button:hover
 		{
-			background: #f7901f;
+			background: #f26e34;
 		}
 
 	.button-style1
@@ -230,7 +223,7 @@
 	}
 		.button-style2:hover
 		{
-			background: #f7901f;
+			background: #f26e34;
 		}
 
 	/* Assign these to ARTICLE tags */
@@ -255,7 +248,7 @@
 		{
 			padding: 0 0 0.30em 0;
 			font-size: 1.10em;
-			color: #467f45;
+			color: #006f93;
 		}
 
 	.box-post
@@ -324,9 +317,9 @@
 	{
 		overflow: hidden;
 		padding: 3em 0em;
-		background: #467f45 url(images/shadow02.png) no-repeat center top;
+		background: #006f93 url(images/shadow02.png) no-repeat center top;
 		box-shadow: 0px 10px 5px rgba(0,0,0,.3), 0px -1px 25px rgba(0,0,0,.3);
-		color: #dae5da;
+		color: #cce2e9;
 	}
 	
 	#main-wrapper
@@ -378,7 +371,7 @@
 		margin: 0 0 1em 0;
 		padding: 0 0 0 3.50em;
 		background: url(images/arrow01.png) no-repeat 0.75em 50%;
-		border-bottom: 1px solid #7fa67e;
+		border-bottom: 1px solid #4d9ab4;
 		letter-spacing: -0.02em;
 		font-size: 1.50em;
 		color: #FFFFFF;
@@ -389,7 +382,7 @@
 		display: inline-block;
 		height: 3.50em;
 		padding: 0 0 0 1em;
-		border-left: 1px solid #7fa67e;
+		border-left: 1px solid #4d9ab4;
 		line-height: 3.5em;
 	}
 
