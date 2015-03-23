@@ -174,7 +174,7 @@ function mapCurrentPos(position) {
 	map = new Microsoft.Maps.Map(document.getElementById('map'), mapOptions);
 	center = map.getCenter();
 	pinOptions = {
-		icon: "{% static "images/house.png" %}",
+		icon: "{% static "images/marker.jpg" %}",
 		width: 16,
 		height: 16,
 		draggable: true
@@ -251,7 +251,7 @@ function mapRecordedPos() {
 	//------------------
 	
     pinOptions = {
-		icon: "{% static "images/house.png" %}",
+		icon: "{% static "images/marker.jpg" %}",
 		width: 16,
 		height: 16,
 		draggable: true
