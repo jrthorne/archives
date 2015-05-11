@@ -14,6 +14,13 @@ from archives.models import *
 import datetime
 
 ###############################################################
+class loginForm(forms.Form):
+    username        = forms.CharField(widget=forms.Textarea(\
+        attrs={'rows':'1', 'cols':'50', 'autofocus':''}), max_length=20, required=True)
+    password        = forms.CharField(widget=forms.PasswordInput, max_length=20, required=True)
+# end loginForm
+
+###############################################################
 class relicForm(forms.ModelForm):
 	class Meta:
 		model			= relic

@@ -80,6 +80,9 @@
 							<ul>
 								<li class="current_page_item"><a href="http://www.magiclamp.com.au">MagicLAMP</a></li>
 								<li><a href="/archives/">Archeological Sites</a></li>
+								{% if user.is_authenticated %}
+								<li><a href="/archives/logout">Log out</a></li>
+								{% endif %}
 							</ul>
 						</nav>
 						</div>

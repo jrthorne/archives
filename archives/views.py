@@ -3,8 +3,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.contrib.auth.models import User
+from django.contrib import auth
 import string # for use in filtering non printing characers
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 
 from archives.models import *
 from archives.forms import *
@@ -12,8 +14,61 @@ from archives.forms import *
 import datetime
 
 # Create your views here.
+#########################################
+# login taken from http://www.djangobook.com/en/beta/chapter12/
+def login(request):    
+    
+    # r90 check to see if already logged on
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/')
+    # end if 
+    
+    usernameKey                = 'username'
+    passwordKey                = 'password'
+
+    # If we submitted the form
+    if request.method == 'POST':
+        # get the posted data
+        form        = loginForm(request.POST)
+        if form.is_valid():
+            cd        = form.cleaned_data
+            # I need some logic to check username/password
+            myUser        = auth.authenticate(username=cd[usernameKey], password=cd[passwordKey])
+            if myUser is not None and myUser.is_active:
+                # Log them in
+                auth.login(request, myUser)
+                # login_required sets the next URL parameter.
+                if 'next' in request.GET and request.GET['next']:
+                    nextURL = request.GET['next']
+                else:
+                    nextURL = reverse('siteList')
+                # end if
+                return HttpResponseRedirect(nextURL) 
+            else:
+                return HttpResponse('Login failed <a href="/archives/login/">Try again</a>')
+            # end if
+        # end if
+        
+    else:
+        form                = loginForm()
+    # end if
+    
+    return render_to_response('archives/login_form.html', locals(), \
+            context_instance=RequestContext(request))
+# end login
+
+
+#########################################
+def logout(request):
+    auth.logout(request)
+    # delete the user
+    request.user            = None
+    return HttpResponseRedirect(reverse('siteList'))
+# end logout
+
 #################################################################
 def siteList(request):
+    user = request.user
 	# used in context
 	BING_KEY		= settings.BING_KEY
 	siteList		= historical_site.objects.all()
@@ -37,6 +92,7 @@ def relicList(request, hsite_id):
 # end relicList
 
 ##################################################################
+@login_required()
 def relicAdd(request, h_siteID):
 	# used in context
 	BING_KEY		= settings.BING_KEY
@@ -72,6 +128,7 @@ def relicAdd(request, h_siteID):
 # end relicAdd
 
 ##################################################################
+@login_required()
 def relicMod(request, relicID):
 	# used in context
 	BING_KEY		= settings.BING_KEY
