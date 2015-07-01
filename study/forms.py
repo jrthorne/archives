@@ -1,7 +1,8 @@
+##################################################################
 FileName        = 'forms.py'
-# By:            Jason Thorne
-# Date:            13-07-2014
-# Description:     The archeologist project
+# By:            Nan JIN
+# Date:            30-06-2015
+# Description:     The archeologist project - Usability Testing
 ##################################################################
 from django import forms
 from django.forms.fields import DateField, ChoiceField, MultipleChoiceField
