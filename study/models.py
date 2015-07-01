@@ -1,8 +1,8 @@
 ##################################################################
 FileName        = 'models.py'
-# By:            Jason Thorne
-# Date:            11-03-2012
-# Description:     The archeologist project
+# By:              Nan JIN
+# Date:            30-06-2015
+# Description:     The archeologist project - Usability Testing
 ##################################################################
 from django.db import models
 from django.contrib.auth.models import User

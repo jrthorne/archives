@@ -1,3 +1,10 @@
+###################################################################
+FileName        = 'views.py'
+# By:            Nan JIN
+# Date:            30-06-2015
+# Description:     The archeologist project - Usability Testing
+##################################################################
+
 from django. shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse

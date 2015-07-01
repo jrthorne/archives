@@ -1,8 +1,8 @@
 ###################################################################
 FileName        = 'admin.py'
-# By:            Jason Thorne
-# Date:            11-03-2012
-# Description:     The archeologist project
+# By:            Nan JIN
+# Date:            30-06-2015
+# Description:     The archeologist project - Usability Testing
 ##################################################################
 from study.models import *
 
