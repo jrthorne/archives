@@ -2,7 +2,8 @@
 
 {% load staticfiles %}
 
-{% block title %}ArcHIVE 4Any | Usability Testing{% endblock %}
+{% block title %}ArcHIVE 4Any | MCQ{% endblock %}
+
 
 
 {% block bodyclass %}
@@ -19,14 +20,9 @@
 								<div id="content" class="8u mobileUI-main-content">
 
 									<article class="box">
-									<h2> ArcHIVE 4Any - Usability Testing </h2>
-									<p>You are invited to participate in a usability testing of ArcHIVE 4Any, which is a mobile augmented reality application. While you are visiting historical sites, you will be able to display pre-recorded video scenes and digital information in various GPS locations. You will also be able to add your own landmarks and relevant digital information. The purpose of the study is to collect user feedback on the digital heritage site. The results will be used to identify the strengths and weaknesses of our system and to improve it. </p>
+									<h2> {{ theSurvey.name }} Registration</h2>
 									
-									<p>The study is being conducted by Manolya Kavakli, Associate Professor of Department of Computing and Chief Investigator, and interns Nan Jin, Heidi Umbach and Gavin Dalgleish.</p>
-
-<p>For more information, please contact us:<a href="mailto:manolya.kavakli@mq.edu.au">manolya.kavakli@mq.edu.au</a> or <a href="mailto:manolya.kavakli@mq.edu.au">nan.jin@mq.edu.au</a>
-
-<h2>Testing procedure</h2>
+						
 <p></p>
 
 </article>
@@ -61,25 +57,9 @@
 										<section class="box">
 																	
 	<img src={% static "images/MQ.jpg" %}/>						<!------------------------------------------------------------------------>				
-	
-{% if surveyList %}
-	<table class="core table-curved">
-	
-	{% for theSurvey in surveyList %}
-	
-	<tr class={% cycle "odd" "even" %}> 
-		<td><a href="/study/participant{{ theSurvey.id }}/">{{ theSurvey.name }}</a></td>
-	</tr>
-	<tr><td><p>{{ theSurvey.description }}</p></td></tr>
-	{% endfor %}
-	
-	</table>
-	
+<p>Your cooperation is our power, we really appreciate it.</p>
 
-{% else %}
-	<H2>No surveys are available.</H2>
-{% endif %}
-
+<p><a href="/study/participant{{ theSurvey.id }}">Return</a></p>
 <!------------------------------------------------------------------------> 	
 												
 

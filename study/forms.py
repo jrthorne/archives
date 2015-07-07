@@ -13,3 +13,26 @@ from django.utils.safestring import mark_safe
 
 from study.models import *
 import datetime
+
+
+###############################################################
+class participantForm(forms.ModelForm):
+    class Meta:
+        model            = participant
+        fields            = ['registerNumber', 'historicalSite', 'task']
+    # end Meta
+    
+# participantForm
+
+###############################################################
+class questionForm(forms.ModelForm):
+    class Meta:
+        model            = participant
+        fields            = ['registerNumber', 'historicalSite', 'task']
+# end Meta
+#    labels = {'name': _('Writer'),}
+#    help_texts = {'name': _('Some useful help text.'),}
+#    error_messages = {'name': {'max_length': _("This writer's name is too long."),},
+#}
+
+# participantForm

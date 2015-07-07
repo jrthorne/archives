@@ -20,7 +20,6 @@ from study.forms import *
 
 import datetime
 
-# Create your views here.
 ##################################################################
 def surveyList(request):
     # used in context
@@ -31,11 +30,40 @@ def surveyList(request):
 # end siteList
 
 ##################################################################
-def questionnaire(request,survey_id):
-    # used in context
+def choiceQuestion(request,survey_id):
     BING_KEY        = settings.BING_KEY
     surveyList      = survey.objects.all()
     theSurvey      = survey.objects.get(pk=survey_id)
     
-    return render_to_response('study/questionnaire.html', locals())
-# end questionnaire
+    return render_to_response('study/choiceQuestion.html', locals())
+# end choice_question
+##################################################################
+def participantReg(request,survey_id):
+    context         = RequestContext(request)
+    # used in context
+    BING_KEY        = settings.BING_KEY
+    surveyList      = survey.objects.all()
+    theSurvey       = survey.objects.get(pk=survey_id)
+    regNum          = request.POST.get('registerNumber',9999)
+    site            = request.POST.get('historicalSite')
+    theTask         = request.POST.get('task')
+    rightNow        = datetime.datetime.now()
+    newParticipant  = participant(registerNumber=regNum,historicalSite=site,task=theTask,entered=rightNow)
+    
+    # Get the context from the request.
+    context = RequestContext(request)
+    
+    errors      = []
+    
+    if request.method == 'POST':
+        form = participantForm(request.POST, instance=newParticipant)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/study/mcq' + survey_id + '/')
+            # end if
+    else:
+        form = participantForm(instance=newParticipant)
+    # end if
+
+    return render_to_response('study/participantForm.html', locals(),context)
+# end participant_form

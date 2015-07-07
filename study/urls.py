@@ -17,5 +17,7 @@ urlpatterns = patterns('study.views',
     # url(r'^$', 'archeologist.views.home', name='home'),
     
     url(r'^$', 'surveyList', name='study'),
-    url(r'^(\d+)/$','questionnaire',name='questionnaire')
+    url(r'^mcq(\d+)/$','choiceQuestion',name='choiceQuestion'),
+                       #    url(r'^(\d+)/$','free_question',name='free_question'),
+    url(r'^participant(\d+)/$','participantReg',name='participantReg'),
 )
