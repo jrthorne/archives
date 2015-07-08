@@ -192,7 +192,7 @@ INSTALLED_APPS = (
     
     'archives',
                   
-    'study',
+    'survey',
 )
 
 # A sample logging configuration. The only tangible logging

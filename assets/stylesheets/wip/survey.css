@@ -1,0 +1,45 @@
+input[type="radio"].cat_SUS{
+		background-color: #343434;
+		width: 10px;
+		height: 10px;
+		border-radius: 10px;
+	}
+	
+input[type="radio"].cat_SUS:checked{
+		background-color: white;
+		width: 10px;
+		height: 10px;
+		border-radius: 10px;
+		border:solid 3px #343434;
+	}
+
+.box h1
+		{
+			padding: 0 0 1em 0;
+			letter-spacing: -0.03em;
+			font-size: 1.60em;
+			color: #000000;
+			text-align: center;
+			font-weight: bold;
+		}
+		
+.box h2
+		{
+			padding: 0 0 0.40em 0;
+			letter-spacing: -0.03em;
+			font-size: 1.20em;
+			color: #076f28;
+			font-weight: bold;
+		}
+		
+.box h3, label
+		{
+			padding: 0 0 0.40em 0;
+			letter-spacing: -0.03em;
+			font-size: 1.00em;
+			color: black;
+		}
+
+#bt{
+	text-align: center;
+}

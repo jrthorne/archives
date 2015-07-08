@@ -1,8 +1,12 @@
 {% extends "base.html" %}
-{% load thumbnail %}
+
 {% load staticfiles %}
 
-{% block title %}ArcHIVE 4Any | Participant Registration{% endblock %}
+{% block title %}ArcHIVE 4Any | Confirmation of Pre-Questionnaire{% endblock %}
+
+{% block headscriptcss %}
+<link href="{% static "stylesheets/wip/survey.css"%}" rel="stylesheet" />
+{% endblock %}
 
 {% block bodyclass %}
 	<body class="right-sidebar">
@@ -18,34 +22,9 @@
 								<div id="content" class="8u mobileUI-main-content">
 
 									<article class="box">
-									<h2> {{ theSurvey.name }} Registration</h2>
-<!--									
-{% if errors %}
-	<ul>
-        {% for error in errors %}
-        <li style="color: red;">{{ error }}</li>
-        {% endfor %}
-	</ul>
-{% endif %}	-->
-	
-<form id="sampleform" method="post" action="" enctype="multipart/form-data">
-	<table  class="core table-form">
-		     {% csrf_token %}
-	            {% for field in form %}
-					{% if field.is_hidden %}
-						{{ field }}
-					{% else %}
-					  	<tr>
-					  	<td>{{ field.label }}<font color="red">{{ field.errors }}</font></td>
-					  	</tr>
-					  	<tr>
-						  	<td align="left">{{ field }}<BR />{{ field.help_text }}</td>
-					  	</tr>
-					{% endif %}            
-				{% endfor %}
-	</table>
-	<input class="button button-style1" type="submit" value="Submit" />
-</form>
+									<h1> Thanks for your answers! </h1>
+									<p></p>
+									<p><h2> Let's start the tour with <a href="/archives">ArcHIVE 4Any</a>!</h2></p>
 									
 </article>
 
@@ -78,14 +57,10 @@
 									<!-- Sidebar Box1 -->
 										<section class="box">
 																	
-	<img src={% static "images/MQ.jpg" %}/>						<!------------------------------------------------------------------------>				
-<p>{{theSurvey.description}}</p>
+	<img src={% static "images/MQ.jpg" %}/>					
 
-<p>Your cooperation is our power, we really appreciate it.</p>
-
-<p><a href="/study/">Return</a></p>
 <!------------------------------------------------------------------------> 	
-												
+		<p>In case you have any questions, please contact us:<a href="mailto:manolya.kavakli@mq.edu.au">manolya.kavakli@mq.edu.au</a> or <a href="mailto:manolya.kavakli@mq.edu.au">nan.jin@mq.edu.au</a></p>										
 
 										</section>
 									
@@ -100,6 +75,5 @@
 
 {% endblock %}
 <!------------------------------------------------------------------------> 
-
 
 

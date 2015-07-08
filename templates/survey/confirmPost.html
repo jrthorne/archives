@@ -2,8 +2,11 @@
 
 {% load staticfiles %}
 
-{% block title %}ArcHIVE 4Any | MCQ{% endblock %}
+{% block headscriptcss %}
+<link href="{% static "stylesheets/wip/survey.css"%}" rel="stylesheet" />
+{% endblock %}
 
+{% block title %}ArcHIVE 4Any | Confirmation of Post-Questionnaire{% endblock %}
 
 
 {% block bodyclass %}
@@ -20,11 +23,11 @@
 								<div id="content" class="8u mobileUI-main-content">
 
 									<article class="box">
-									<h2> {{ theSurvey.name }} Registration</h2>
+									<h1> Thanks for your participation!</h1>
+									<p></p>
+									<p><h2> We really appreciate your help!</h2></p>
+									<p>The results will help us to improve our <a href="/archives">ArcHIVE 4Any</a> application. You're welcome to come back and try our new updates!</p>
 									
-						
-<p></p>
-
 </article>
 
 <!-- Two Column Content BELOW. NO IDEA WHY, BUT IF THESE SECTIONS
@@ -56,12 +59,10 @@
 									<!-- Sidebar Box1 -->
 										<section class="box">
 																	
-	<img src={% static "images/MQ.jpg" %}/>						<!------------------------------------------------------------------------>				
-<p>Your cooperation is our power, we really appreciate it.</p>
+	<img src={% static "images/MQ.jpg" %}/>					
 
-<p><a href="/study/participant{{ theSurvey.id }}">Return</a></p>
 <!------------------------------------------------------------------------> 	
-												
+		<p>In case you have any questions, please contact us:<a href="mailto:manolya.kavakli@mq.edu.au">manolya.kavakli@mq.edu.au</a> or <a href="mailto:manolya.kavakli@mq.edu.au">nan.jin@mq.edu.au</a></p>										
 
 										</section>
 									
@@ -76,3 +77,5 @@
 
 {% endblock %}
 <!------------------------------------------------------------------------> 
+
+
