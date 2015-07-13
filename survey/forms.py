@@ -2,7 +2,14 @@ from django import forms
 from django.forms import models
 from survey.models import Question, Category, Survey, Response, AnswerText, AnswerRadio, AnswerSelect, AnswerInteger, AnswerSelectMultiple
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+
+from django.forms import Field
+from django.utils.translation import ugettext_lazy
+
+Field.default_error_messages = {
+    'required': ugettext_lazy("Please fill out this field."),
+}
+
 
 # blatantly stolen from
 # http://stackoverflow.com/questions/5935546/align-radio-buttons-horizontally-in-django-forms?rq=1
@@ -14,13 +21,15 @@ class HorizontalRadioRenderer(forms.RadioSelect.renderer):
 class ResponseForm(models.ModelForm):
 	class Meta:
 		model = Response	
-		fields = ('registerNumber',)
+		fields = ('registerNumber','site','task')
 
 	def __init__(self, *args, **kwargs):
 		# expects a survey object to be passed in initially
 		survey = kwargs.pop('survey')
 		self.survey = survey
 		super(ResponseForm, self).__init__(*args, **kwargs)
+		self.fields['registerNumber'].label = "Register Number (xxxx) :"
+		self.fields['registerNumber'].error_messages['required'] = "Please find your register number on the brochure."
 
 		# add a field for each survey question, corresponding to the question
 		# type as appropriate.

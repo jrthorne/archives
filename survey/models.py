@@ -5,7 +5,7 @@ import archeologist.settings
 
 class Survey(models.Model):
 	name = models.CharField(max_length=400)
-	description = models.TextField()
+	description = models.TextField(blank=True, null=True,)
 
 	def __unicode__(self):
 		return (self.name)
@@ -18,6 +18,7 @@ class Survey(models.Model):
 
 class Category(models.Model):
     name            = models.CharField(max_length=400)
+    description     = models.TextField(blank=True, null=True,)
     survey          = models.ForeignKey(Survey)
 
     def __unicode__(self):
@@ -74,13 +75,19 @@ class Question(models.Model):
 		return (self.text)
 
 class Response(models.Model):
-    registerNumber  = models.CharField(validators=[RegexValidator(regex='^(?!9999)[0-9]{4}$', message='The register number has 4 figures',code='nomatch')],max_length=4,help_text='Please find it on the brochure.')
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    survey = models.ForeignKey(Survey)
+	TASK_CHOICE = (('1','Adding landmarks'),('2','Visiting landmarks'))
+	SITE_CHOICE = (('1','The Rocks'),('2','Manly Quarantine Station'))
+
+
+	registerNumber  = models.CharField(validators=[RegexValidator(regex='^(?!9999)[0-9]{4}$',message='The register number has 4 figures',code='nomatch')],max_length=4)
+	site  = models.CharField(max_length=400,choices=SITE_CHOICE)
+	task= models.CharField(max_length=400,choices=TASK_CHOICE)
+	created = models.DateTimeField(auto_now_add=True)
+	updated = models.DateTimeField(auto_now=True)
+	survey = models.ForeignKey(Survey)
     
         
-    def __unicode__(self):
+	def __unicode__(self):
 		return ("response %s" % self.registerNumber)
 
 class AnswerBase(models.Model):
