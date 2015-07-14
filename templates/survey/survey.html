@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% load staticfiles %}
+{% load survey_extras %}
+
+{% block headscriptcss %}
+<link href="{% static "stylesheets/wip/survey.css"%}" rel="stylesheet" />
+{% endblock %}
+
+{% block title %}ArcHIVE 4Any | {{survey.name}}{% endblock %}
+
+{% block bodyclass %}
+	<body class="right-sidebar">
+{% endblock %}
+
+							{% block content %}
+<!-- Main Wrapper -->
+				<div id="main-wrapper">
+					<div class="5grid-layout">
+						<div class="row">
+							
+							<!-- Content -->
+								<div id="content" class="8u mobileUI-main-content">
+
+									<article class="box">
+
+<h1>{{survey.name}}</h1>
+<p></p>
+<div>
+	<form action="/survey/{{survey.id}}/" method="post">{% csrf_token %}
+	<table>
+		<tr><td colspan="2"><h2>Registration</h2></td></tr>
+		<tr>
+			<td><lable>{{ response_form.registerNumber.label_tag }}</td></td>				
+		</tr>
+		<tr>
+			<td>{{ response_form.registerNumber }}
+			<font color="red">{{ response_form.registerNumber.errors }}</font></td>					
+		</tr>
+		<tr><td>{{ response_form.registerNumber.help_text }}</td></tr>
+		
+		<tr>
+			<td><lable>{{ response_form.site.label_tag }}</td></td>				
+		</tr>
+		<tr>
+			<td>{{ response_form.site }}
+			<font color="red">{{ response_form.site.errors }}</font></td>			
+		</tr>
+		
+		<tr>
+			<td><lable>{{ response_form.task.label_tag }}</td></td>				
+		</tr>
+		<tr>
+			<td>{{ response_form.task }}	
+			<font color="red">{{ response_form.task.errors }}</font></td>				
+		</tr>
+		
+	</table>
+		{% for category in category_items %}
+	<table>
+		<tr><td colspan="2"><h2>{{category.name}}</h2></td></tr>	
+		<tr><td colspan="2">{{category.description}}</td></tr>		
+			{% for field in response_form %}
+				{% if field.field.widget.attrs.category == category.name %}				
+						<tr>
+						<td colspan="2"><label class="label-inline">{{ field.label }}</label></td>
+						<!--<td>{{ field.help_text}}</td>-->
+						</tr>
+						<td>{{ field }}
+						<font color="red">{{ field.errors }}</font></td>
+						</tr>
+				{% endif %}
+			{% endfor %}
+		{% endfor %}
+	</table>
+		<div id="bt"><input class="button button-style1" type='submit' value='Submit' /></div>
+	</form>
+
+</div>
+
+</article>
+
+<!-- Two Column Content BELOW. NO IDEA WHY, BUT IF THESE SECTIONS
+									DO NOT EXIST THEN THE SIDE BAR APPEARS UNDERNEATH -->
+										<div class="5grid" id="two-column">
+											<div class="row">
+												
+												<!-- Two Column Content -->
+														<div class="6u">
+															
+														</div>
+				
+												<!-- Two Column Content -->
+														<div class="6u">
+															
+														</div>
+											
+											</div>
+										</div>
+									<!-- Two Column Content ABOVE. NO IDEA WHY, BUT IF THESE SECTIONS
+									DO NOT EXIST THEN THE SIDE BAR APPEARS UNDERNEATH -->
+	
+								</div>
+							<!-- Content Ends Here -->
+								
+							<!-- Sidebar -->
+								<div id="sidebar" class="4u">
+									
+									<!-- Sidebar Box1 -->
+										<section class="box">
+																	
+	<img src={% static "images/MQ.jpg" %}/>						<!------------------------------------------------------------------------>				
+
+<p>Your cooperation is our power, we really appreciate it.</p>
+
+<p><a href="/survey/">Return</a></p>
+<!------------------------------------------------------------------------> 	
+												
+
+										</section>
+									
+																
+									
+								</div>
+							<!-- Sidebar Ends Here -->
+	
+						</div>
+					</div>
+				</div>
+
+{% endblock %}
+<!------------------------------------------------------------------------> 
+
+

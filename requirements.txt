@@ -1,5 +1,4 @@
 Django==1.6.1
 MySQL-python==1.2.5
-Pillow==2.3.0
-sorl-thumbnail==11.12.1b
-wsgiref==0.1.2
+Pillow==2.9.0
+sorl-thumbnail==11.12.1b0

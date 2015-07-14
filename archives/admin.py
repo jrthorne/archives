@@ -1,8 +1,8 @@
 ###################################################################
-FileName		= 'admin.py'
-# By:			Jason Thorne
-# Date:			11-03-2012
-# Description: 	The archeologist project
+FileName        = 'admin.py'
+# By:            Jason Thorne
+# Date:            11-03-2012
+# Description:     The archeologist project
 ##################################################################
 from archives.models import *
 
@@ -13,8 +13,8 @@ from django.contrib.auth.models import User
 from django import forms
 ##################################################################
 class relicAdmin(admin.ModelAdmin):
-	list_display		= ['id', 'name', 'historical_site', 'photo']
-	list_filter			= ['historical_site']
+    list_display        = ['id', 'name', 'historical_site', 'photo']
+    list_filter            = ['historical_site']
 # end relicAdmin
 
 ##################################################################

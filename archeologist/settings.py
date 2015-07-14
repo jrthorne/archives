@@ -1,8 +1,8 @@
 ##################################################################
-FileName		= 'settings.py'
-# By:			Jason Thorne
-# Date:			15-06-2014
-# Description: 	The archeologist project
+FileName        = 'settings.py'
+# By:            Jason Thorne
+# Date:            15-06-2014
+# Description:     The archeologist project
 ##################################################################
 # Django settings for relics project.
 import os
@@ -10,15 +10,16 @@ import datetime, time
 
 # If this is being run as jason, then turn debugging on
 if "USER" in os.environ:
-	if os.environ['USER'] == 'jason':
-		DEBUG				= True
-	else:
-		DEBUG 				= False
-	# end if 
+    if os.environ['USER'] == 'jason':
+        DEBUG                = True
+    else:
+        DEBUG                 = False
+    # end if 
 else:
-	DEBUG 				= False
+    DEBUG                 = False
 # end if
 
+DEBUG=True
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = DEBUG
 # THUMBNAIL_BACKEND = 'sorl.thumbnail.base.ThumbnailBackend'
@@ -27,26 +28,26 @@ THUMBNAIL_DEBUG = DEBUG
 
 ########################################## 
 def dateFromString(dateString, dateFormat, useTime):
-	strippedTime	= time.strptime(dateString, dateFormat)
-	myTime			= time.mktime(strippedTime)
-	if useTime:
-		retVal		= datetime.datetime.fromtimestamp(myTime)
-		#retVal		= retVal.date()
-	else:
-		retVal		= datetime.date.fromtimestamp(myTime)
-		retVal		= retVal.date()
-	# end if
-	
-	return retVal
+    strippedTime    = time.strptime(dateString, dateFormat)
+    myTime            = time.mktime(strippedTime)
+    if useTime:
+        retVal        = datetime.datetime.fromtimestamp(myTime)
+        #retVal        = retVal.date()
+    else:
+        retVal        = datetime.date.fromtimestamp(myTime)
+        retVal        = retVal.date()
+    # end if
+    
+    return retVal
 # end dateFromString
 #######################################################################
 def myDecrypt(myPasswd):
-	retVal				= ''
-	for i in myPasswd:
-		retVal			+= chr(ord(i) - 5)
-	# next i
-	
-	return retVal
+    retVal                = ''
+    for i in myPasswd:
+        retVal            += chr(ord(i) - 5)
+    # next i
+    
+    return retVal
 
 #######################################################################
 
@@ -58,23 +59,23 @@ def myDecrypt(myPasswd):
 #   Will be helpful when absolute filesystem paths are required.
 #   http://www.ramavadakattu.com/top-10-tips-to-a-new-django-developer
 # r139
-PROJECT_ROOT 			= os.path.realpath(os.path.dirname(__file__))
+PROJECT_ROOT             = os.path.realpath(os.path.dirname(__file__))
 
-ADMINS 					= (
-	('Jason Thorne', 'jthorne@magiclamp.com.au'),
+ADMINS                     = (
+    ('Jason Thorne', 'jthorne@magiclamp.com.au'),
 )
 
-MANAGERS 				= ADMINS
+MANAGERS                 = ADMINS
 
-DATABASES 				= {
-	'default': {
-		'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-		'NAME': 'archives',					  # Or path to database file if using sqlite3.
-		'USER': 'archives',					  # Not used with sqlite3.
-		'PASSWORD': 'archives',				  # Not used with sqlite3.
-		'HOST': '',					  # Set to empty string for localhost. Not used with sqlite3.
-		'PORT': '',					  # Set to empty string for default. Not used with sqlite3.
-	}
+DATABASES                 = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'archives',                      # Or path to database file if using sqlite3.
+        'USER': 'archives',                      # Not used with sqlite3.
+        'PASSWORD': 'archives',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
 }
 
 # where do we go to login?
@@ -84,65 +85,65 @@ LOGIN_URL               = '/archives/login'
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-TIME_ZONE 				= 'Australia/Sydney'
+TIME_ZONE                 = 'Australia/Sydney'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE			= 'en-us'
+LANGUAGE_CODE            = 'en-us'
 
-SITE_ID 				= 1
+SITE_ID                 = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
-USE_I18N 				= True
+USE_I18N                 = True
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale.
-USE_L10N 				= True
+USE_L10N                 = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
-USE_TZ					= True
+USE_TZ                    = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT 				= os.path.join(PROJECT_ROOT, 'media')
+MEDIA_ROOT                 = os.path.join(PROJECT_ROOT, 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL 				= '/media/'
+MEDIA_URL                 = '/media/'
 
 FILE_UPLOAD_PERMISSIONS = 0644
 
 # Security wise this is a really good idea. It destroys the cookie when the browser closes, and
 # I think it also takes the browser default in destroying the cookie after a certain
 # amount of time
-SESSION_EXPIRE_AT_BROWSER_CLOSE			= True
+SESSION_EXPIRE_AT_BROWSER_CLOSE            = True
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT 			= os.path.join(PROJECT_ROOT, 'static')
+STATIC_ROOT             = os.path.join(PROJECT_ROOT, 'static')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL 				= '/static/'
+STATIC_URL                 = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-	# Put strings here, like "/home/html/static" or "C:/www/django/static".
-	# Always use forward slashes, even on Windows.
-	# Don't forget to use absolute paths, not relative paths.
-	'/www/archeologistRoot/assets/',
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    '/www/archeologistRoot/assets/',
 )
 
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
-	'django.contrib.staticfiles.finders.FileSystemFinder',
-	'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#	'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -190,6 +191,8 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     
     'archives',
+                  
+    'survey',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -223,14 +226,14 @@ LOGGING = {
 
 
 #  use gmail for sending emails
-EMAIL_HOST			= 'SMTP.GMAIL.COM'
-EMAIL_PORT			= '587'
-EMAIL_HOST_USER	= 'jtho2607@gmail.com'
+EMAIL_HOST            = 'SMTP.GMAIL.COM'
+EMAIL_PORT            = '587'
+EMAIL_HOST_USER    = 'jtho2607@gmail.com'
 EMAIL_HOST_PASSWORD = myDecrypt('lw55i68x')
-EMAIL_USE_TLS		= True
+EMAIL_USE_TLS        = True
 
 ALLOWED_HOSTS = [
     '.cybergameacademy.com', # Allow domain and subdomains
 ]
 
-BING_KEY			= 'AoaUFrnhBNJZNwnVf2kj3uvLg0SQHr21pjs_8E7nI4NphT7QT3W-fDDUA7PJoyhk'
+BING_KEY            = 'AoaUFrnhBNJZNwnVf2kj3uvLg0SQHr21pjs_8E7nI4NphT7QT3W-fDDUA7PJoyhk'

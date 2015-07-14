@@ -1,7 +1,7 @@
-FileName		= 'forms.py'
-# By:			Jason Thorne
-# Date:			13-07-2014
-# Description: 	The archeologist project
+FileName        = 'forms.py'
+# By:            Jason Thorne
+# Date:            13-07-2014
+# Description:     The archeologist project
 ##################################################################
 from django import forms
 from django.forms.fields import DateField, ChoiceField, MultipleChoiceField
@@ -22,13 +22,13 @@ class loginForm(forms.Form):
 
 ###############################################################
 class relicForm(forms.ModelForm):
-	class Meta:
-		model			= relic
-		fields			= ['historical_site', 'latitude', 'longitude', 'name', \
-						'photo', 'media_file', 'media_link', 'description']						 
-	# end Meta
-	
-	description = forms.CharField(widget=forms.Textarea(\
-		attrs={'rows':'10', 'cols':'30'}), required=False)
-				
+    class Meta:
+        model            = relic
+        fields            = ['historical_site', 'latitude', 'longitude', 'name', \
+                        'photo', 'media_file', 'media_link', 'description']                         
+    # end Meta
+    
+    description = forms.CharField(widget=forms.Textarea(\
+        attrs={'rows':'10', 'cols':'30'}), required=False)
+                
 # end relicForm

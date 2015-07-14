@@ -19,4 +19,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', TemplateView.as_view(template_name="index.html")),
     url(r'^archives/', include('archives.urls')), #direct_to_template, {'template': 'index.html'}),
+    url(r'^survey/', include('survey.urls')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
