@@ -75,7 +75,7 @@ class Question(models.Model):
 		return (self.text)
 
 class Response(models.Model):
-	TASK_CHOICE = (('1','Adding landmarks'),('2','Visiting landmarks'))
+	TASK_CHOICE = (('1','Visiting landmarks'),('2','Adding landmarks'))
 	SITE_CHOICE = (('1','The Rocks'),('2','Manly Quarantine Station'))
 
 
