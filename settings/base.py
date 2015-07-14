@@ -8,18 +8,7 @@ FileName        = 'settings.py'
 import os
 import datetime, time
 
-# If this is being run as jason, then turn debugging on
-if "USER" in os.environ:
-    if os.environ['USER'] == 'jason':
-        DEBUG                = True
-    else:
-        DEBUG                 = False
-    # end if 
-else:
-    DEBUG                 = False
-# end if
-
-DEBUG=True
+DEBUG=False
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = DEBUG
 # THUMBNAIL_BACKEND = 'sorl.thumbnail.base.ThumbnailBackend'
@@ -70,10 +59,10 @@ MANAGERS                 = ADMINS
 DATABASES                 = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'archives',                      # Or path to database file if using sqlite3.
-        'USER': 'archives',                      # Not used with sqlite3.
-        'PASSWORD': 'archives',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'NAME': 'magiclamp$archives',                      # Or path to database file if using sqlite3.
+        'USER': 'magiclamp',                      # Not used with sqlite3.
+        'PASSWORD': 'magiclamp',                  # Not used with sqlite3.
+        'HOST': 'magiclamp.mysql.pythonanywhere-services.com',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
@@ -130,13 +119,6 @@ STATIC_ROOT             = os.path.join(PROJECT_ROOT, 'static')
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL                 = '/static/'
 
-# Additional locations of static files
-STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    '/www/archeologistRoot/assets/',
-)
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -171,12 +153,6 @@ ROOT_URLCONF = 'archeologist.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'archeologist.wsgi.application'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    "/www/archeologistRoot/templates",
-)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -228,8 +204,8 @@ LOGGING = {
 #  use gmail for sending emails
 EMAIL_HOST            = 'SMTP.GMAIL.COM'
 EMAIL_PORT            = '587'
-EMAIL_HOST_USER    = 'jtho2607@gmail.com'
-EMAIL_HOST_PASSWORD = myDecrypt('lw55i68x')
+EMAIL_HOST_USER    = 'lokiWebmaster@gmail.com'
+EMAIL_HOST_PASSWORD = 'sivaraman'
 EMAIL_USE_TLS        = True
 
 ALLOWED_HOSTS = [
@@ -237,3 +213,9 @@ ALLOWED_HOSTS = [
 ]
 
 BING_KEY            = 'AoaUFrnhBNJZNwnVf2kj3uvLg0SQHr21pjs_8E7nI4NphT7QT3W-fDDUA7PJoyhk'
+
+# import local settings
+try:
+    from local import *
+except ImportError:
+    pass

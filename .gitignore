@@ -2,3 +2,4 @@
 *.pyc
 archeologist/media
 *.sql
+settings/local.py
