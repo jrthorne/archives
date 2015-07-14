@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block heading %}
+Log In
+{% endblock %}
+
+
+{% block bannerContent %}
+{% endblock %}
+
+{% block bodyclass %}
+	<body class="right-sidebar">
+{% endblock %}
+
+
+{% block content %}
+<!-- Main Wrapper -->
+<div id="main-wrapper">
+	<div class="5grid-layout">
+		<div class="row">
+		<!-- Content -->
+		<div id="content" class="12u mobileUI-main-content">
+
+			<article class="box">
+<!------------------------------------------------------------------------>
+
+<h2>Login Form</h2>
+
+
+{% if form.errors %}
+	<P style="color: red;">
+	Please correct the error{{form.errors|pluralize }} below.
+	</p>
+{% endif %}
+
+<form id='sampleform' method='post' action=''>
+{% csrf_token %}
+	<table class="core table-form">
+			{{ form.as_table }}
+	</table>
+	<input class="button button-style1" type='submit' value='Login' />
+</form>
+
+<!------------------------------------------------------------------- --->
+</article>
+									
+
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
