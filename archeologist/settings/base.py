@@ -48,7 +48,7 @@ def myDecrypt(myPasswd):
 #   Will be helpful when absolute filesystem paths are required.
 #   http://www.ramavadakattu.com/top-10-tips-to-a-new-django-developer
 # r139
-PROJECT_ROOT             = os.path.realpath(os.path.dirname(__file__))
+PROJECT_ROOT             = os.path.join(os.path.normpath(os.path.dirname(__file__)), '../')
 
 ADMINS                     = (
     ('Jason Thorne', 'jthorne@magiclamp.com.au'),
@@ -115,7 +115,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE            = True
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT             = os.path.join(PROJECT_ROOT, '../static')
+STATIC_ROOT             = os.path.join(PROJECT_ROOT, 'static')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
