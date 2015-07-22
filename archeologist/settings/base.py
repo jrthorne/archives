@@ -212,6 +212,7 @@ EMAIL_USE_TLS        = True
 
 ALLOWED_HOSTS = [
     '.cybergameacademy.com', # Allow domain and subdomains
+    'localhost'
 ]
 
 BING_KEY            = 'AoaUFrnhBNJZNwnVf2kj3uvLg0SQHr21pjs_8E7nI4NphT7QT3W-fDDUA7PJoyhk'
