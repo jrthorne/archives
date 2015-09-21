@@ -41,7 +41,7 @@ def SurveyDetail(request, id):
                 return HttpResponseRedirect('/survey/')
     else:
         form = ResponseForm(survey=survey)
-        print format
+        #print format
         
     return render(request, 'survey/survey.html', {'response_form': form, 'survey': survey, 'category_items': category_items})
 
