@@ -211,7 +211,7 @@ EMAIL_HOST_PASSWORD = 'sivaraman'
 EMAIL_USE_TLS        = True
 
 ALLOWED_HOSTS = [
-    '.cybergameacademy.com', # Allow domain and subdomains
+    '.archive.science.mq.edu.au', # Allow domain and subdomains
     'localhost'
 ]
 
